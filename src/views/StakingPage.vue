@@ -435,12 +435,11 @@ const handleStakingContract = (contract: any) => {
 
                 <!-- 质押信息网格 -->
                   <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-indigo-300 text-sm mb-1">{{ t('staking.staking_time') }}</p>
                     <p class="text-violet-300 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
                     <p class="font-bold text-base break-all text-violet-200">{{ staking.yearRate }}</p>
                   </div>
                   <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-indigo-300 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
+                    <p class="text-indigo-300 text-sm mb-1">{{ t('staking.staking_reward') }}</p>
                     <p class="font-bold text-base break-all text-indigo-200">{{ formatNumber(staking.stakingReward) }}</p>
                   </div>
                 </div>
