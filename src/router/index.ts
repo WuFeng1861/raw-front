@@ -34,53 +34,47 @@ const router = createRouter({
       meta: { title: 'Box - Alpha Project' }
     },
     {
-      path: '/earn',
-      name: 'earn',
-      component: EarnPage,
-      meta: { title: 'Earn - Alpha Project' }
+      path: '/staking',
+      name: 'staking',
+      component: StakingPage,
+      meta: { title: 'Staking - Alpha Project' }
     },
-    // {
-    //   path: '/staking',
-    //   name: 'staking',
-    //   component: StakingPage,
-    //   meta: { title: 'Staking - Alpha Project' }
-    // },
-    // {
-    //   path: '/nft-staking',
-    //   name: 'nft-staking',
-    //   component: NFTStakingPage,
-    //   meta: { title: 'NFT Staking - Alpha Project' }
-    // },
-    // {
-    //   path: '/staking-detail/:id',
-    //   name: 'staking-detail',
-    //   component: StakingDetailPage,
-    //   meta: { title: 'Staking Detail - Alpha Project' }
-    // },
-    // {
-    //   path: '/node',
-    //   name: 'node',
-    //   component: NodePage,
-    //   meta: { title: 'Node - Alpha Project' }
-    // },
-    // {
-    //   path: '/node/:type',
-    //   name: 'node-detail',
-    //   component: NodeDetailPage,
-    //   meta: { title: 'Node Detail - Alpha Project' }
-    // },
-    // {
-    //   path: '/token',
-    //   name: 'token',
-    //   component: TokenPage,
-    //   meta: { title: 'Token - Alpha Project' }
-    // },
-    // {
-    //   path: '/token/transfer',
-    //   name: 'token-transfer',
-    //   component: TokenTransferPage,
-    //   meta: { title: 'Token Transfer - Alpha Project' }
-    // },
+    {
+      path: '/nft-staking',
+      name: 'nft-staking',
+      component: NFTStakingPage,
+      meta: { title: 'NFT Staking - Alpha Project' }
+    },
+    {
+      path: '/staking-detail/:id',
+      name: 'staking-detail',
+      component: StakingDetailPage,
+      meta: { title: 'Staking Detail - Alpha Project' }
+    },
+    {
+      path: '/node',
+      name: 'node',
+      component: NodePage,
+      meta: { title: 'Node - Alpha Project' }
+    },
+    {
+      path: '/node/:type',
+      name: 'node-detail',
+      component: NodeDetailPage,
+      meta: { title: 'Node Detail - Alpha Project' }
+    },
+    {
+      path: '/token',
+      name: 'token',
+      component: TokenPage,
+      meta: { title: 'Token - Alpha Project' }
+    },
+    {
+      path: '/token/transfer',
+      name: 'token-transfer',
+      component: TokenTransferPage,
+      meta: { title: 'Token Transfer - Alpha Project' }
+    },
     // Redirect any unknown routes to home
     {
       path: '/:pathMatch(.*)*',
