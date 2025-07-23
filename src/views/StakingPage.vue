@@ -237,24 +237,17 @@ const handleStakingContract = (contract: any) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 pb-16 relative overflow-hidden">
+  <div class="min-h-screen bg-alpha-surface pb-16 relative">
     <!-- 背景图片 -->
     <div
-      class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 z-0"
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
       :style="{ backgroundImage: `url('${config.backgrounds.friends}')` }"
     ></div>
-
-    <!-- 动态装饰背景 -->
-    <div class="absolute inset-0 opacity-20 z-5">
-      <div class="absolute top-20 left-20 w-64 h-64 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute top-1/2 right-10 w-48 h-48 bg-indigo-400 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-      <div class="absolute bottom-32 left-1/3 w-56 h-56 bg-violet-500 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
-    </div>
 
     <!-- 内容层 -->
     <div class="relative z-10">
       <!-- Header -->
-      <header class="p-4 relative backdrop-blur-sm">
+      <header class="p-4 relative">
         <div class="flex justify-between items-center mb-4">
           <AlphaLogo />
           <LanguageSwitcher />
@@ -264,49 +257,26 @@ const handleStakingContract = (contract: any) => {
       <!-- Main Content -->
       <div class="px-4 py-6">
         <!-- 标题 -->
-        <h1 :class="[
-          'font-bold mb-6 bg-gradient-to-r from-purple-300 via-violet-200 to-indigo-300 bg-clip-text text-transparent drop-shadow-lg text-center',
-          $i18n.locale === 'en' ? 'text-3xl' : 'text-4xl'
-        ]">{{ t('staking.title') }}</h1>
+        <h1 class="text-3xl font-bold mb-6" style="color: #5BF655">{{ t('staking.title') }}</h1>
 
         <!-- 我的质押池按钮 - 使用签到领取按钮样式 -->
-        <div class="text-center mb-8">
-          <button
-            @click="handleNFTStakingPool"
-            class="px-8 py-4 text-white font-bold text-lg relative overflow-hidden rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500"
-            style="box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 60px rgba(99, 102, 241, 0.3)"
-          >
-            <!-- 发光效果 -->
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 translate-x-full group-hover:animate-shimmer"></div>
-            
-            <span class="relative z-10 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-              </svg>
-              {{ t('staking.my_staking_pool_nft') }}
-            </span>
-          </button>
-        </div>
+        <button
+          @click="handleNFTStakingPool"
+          class="btn-primary w-full mb-6 py-4 text-black font-bold text-lg rounded-full"
+        >
+          {{ t('staking.my_staking_pool_nft') }}
+        </button>
 
-        <!-- 主要内容容器 -->
-        <div class="space-y-6">
+        <!-- 绿色背景容器 -->
+        <div class="rounded-2xl p-4 mb-6" style="background: linear-gradient(135deg, rgba(124, 221, 61, 0.8) 0%, rgba(83, 203, 67, 0.8) 100%)">
 
           <!-- 我的质押列表 -->
-          <div class="relative group">
-            <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-3xl blur opacity-50 group-hover:opacity-70 transition duration-300"></div>
-            <div class="relative bg-black/70 backdrop-blur-md border border-violet-400/30 rounded-3xl p-6">
-              <div class="flex items-center space-x-3 mb-6">
-                <div class="w-10 h-10 bg-gradient-to-br from-violet-400 to-purple-400 rounded-xl flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h2 class="text-xl font-bold text-white">{{ t('staking.my_staking') }}</h2>
-              </div>
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-white mb-4">{{ t('staking.my_staking') }}</h2>
 
             <!-- 加载状态 -->
             <div v-if="isLoading" class="text-center py-8">
-              <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-purple-600 transition ease-in-out duration-150">
+              <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-alpha-primary transition ease-in-out duration-150">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -317,39 +287,41 @@ const handleStakingContract = (contract: any) => {
 
             <!-- 暂无质押状态 -->
             <div v-else-if="!walletStore.address" class="text-center py-12">
-              <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-violet-300/20">
+              <div class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
                 <!-- 钱包图标 -->
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-violet-500 bg-opacity-30 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
                 <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.connect_wallet_to_view') }}</h3>
-                <p class="text-violet-300 text-sm">{{ t('staking.connect_wallet_to_view_desc') }}</p>
+                <p class="text-gray-400 text-sm">{{ t('staking.connect_wallet_to_view_desc') }}</p>
               </div>
             </div>
 
             <!-- 暂无质押记录 -->
             <div v-else-if="myStakingList.length === 0" class="text-center">
-              <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-violet-300/20">
+              <div class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
                 <!-- 质押图标 -->
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-violet-500 bg-opacity-30 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-violet-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                  <img
+                    src="https://wufeng98.cn/imgServerApi/images/6f4c3eff-a594-49a5-82a2-be9e4a808452.png"
+                    class="w-8 h-8 opacity-40"
+                    alt="质押"
+                  />
                 </div>
                 <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.no_staking_records') }}</h3>
-                <p class="text-violet-300 text-sm mb-4">{{ t('staking.no_staking_records_desc') }}</p>
+                <p class="text-gray-400 text-sm mb-4">{{ t('staking.no_staking_records_desc') }}</p>
               </div>
             </div>
 
             <!-- 质押记录列表 -->
-            <div v-else class="space-y-3">
+            <div v-else class="space-y-4">
               <div
                 v-for="staking in myStakingList"
                 :key="staking.id"
                 @click="handleMyStakingPool(staking.poolNumber)"
-                class="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-violet-300/20 hover:border-violet-300/40 transition-all duration-300"
+                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700"
               >
                 <!-- 质押池编号和状态头部 -->
                 <div class="flex items-center justify-between mb-4">
@@ -404,7 +376,7 @@ const handleStakingContract = (contract: any) => {
                   <!-- 内容区域 -->
                   <div class="relative z-10">
                     <div class="flex items-center justify-between mb-2">
-                      <p class="text-white text-sm font-medium flex items-center">
+                      <p class="text-gray-300 text-sm font-medium flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" :style="`color: ${staking.poolColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -414,7 +386,8 @@ const handleStakingContract = (contract: any) => {
                       <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-bounce" :style="`color: ${staking.poolColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                        </svg>
+                          </svg>
+                          <span class="text-white font-medium">{{ t('staking.status_active') }}</span>
                       </div>
                     </div>
 
@@ -424,7 +397,7 @@ const handleStakingContract = (contract: any) => {
                          :style="`text-shadow: 0 0 20px ${staking.poolColor}80, 0 0 40px ${staking.poolColor}40`">
                         {{ formatNumber(staking.stakingAmount) }}
                       </p>
-                      <span class="text-white text-sm font-medium opacity-80">ALPHA</span>
+                      <span class="text-gray-400 text-sm font-medium">RWA</span>
                     </div>
 
                     <!-- 底部装饰线 -->
@@ -434,36 +407,27 @@ const handleStakingContract = (contract: any) => {
                 </div>
 
                 <!-- 质押信息网格 -->
-                  <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-violet-300 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                    <p class="font-bold text-base break-all text-violet-200">{{ staking.yearRate }}</p>
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                  <div class="rounded-lg p-3 border border-gray-600" style="background-color: #151b12;">
+                    <p class="text-gray-400 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
+                    <p class="font-bold text-base break-all" style="color: #5BF655">{{ staking.yearRate }}</p>
                   </div>
-                  <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-indigo-300 text-sm mb-1">{{ t('staking.staking_reward') }}</p>
-                    <p class="font-bold text-base break-all text-indigo-200">{{ formatNumber(staking.stakingReward) }}</p>
+                  <div class="rounded-lg p-3 border border-gray-600" style="background-color: #151b12;">
+                    <p class="text-gray-400 text-sm mb-1">{{ t('staking.staking_reward') }}</p>
+                    <p class="text-white font-bold text-base break-all">{{ formatNumber(staking.stakingReward) }}</p>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 
           <!-- 质押合约列表 -->
-          <div class="relative group">
-            <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-3xl blur opacity-50 group-hover:opacity-70 transition duration-300"></div>
-            <div class="relative bg-black/70 backdrop-blur-md border border-indigo-400/30 rounded-3xl p-6">
-              <div class="flex items-center space-x-3 mb-6">
-                <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-xl flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h2 class="text-xl font-bold text-white">{{ t('staking.staking_contracts') }}</h2>
-              </div>
+         <div id="staking-contracts">
+            <h2 class="text-xl font-bold text-white mb-4">{{ t('staking.staking_contracts') }}</h2>
 
             <!-- 加载状态 -->
             <div v-if="isLoadingPools" class="text-center py-8">
-              <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-indigo-600 transition ease-in-out duration-150">
+              <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-alpha-primary transition ease-in-out duration-150">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -474,25 +438,27 @@ const handleStakingContract = (contract: any) => {
 
             <!-- 暂无质押池 -->
             <div v-else-if="stakingContracts.length === 0" class="text-center py-8">
-              <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 border border-indigo-300/20">
+              <div class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
                 <!-- 质押图标 -->
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-indigo-500 bg-opacity-30 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                  <img
+                    src="https://wufeng98.cn/imgServerApi/images/6f4c3eff-a594-49a5-82a2-be9e4a808452.png"
+                    class="w-8 h-8 opacity-40"
+                    alt="质押"
+                  />
                 </div>
                 <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.no_available_pools') }}</h3>
-                <p class="text-indigo-300 text-sm">{{ t('staking.no_available_pools_desc') }}</p>
+                <p class="text-gray-400 text-sm">{{ t('staking.no_available_pools_desc') }}</p>
               </div>
             </div>
 
             <!-- 质押合约列表 - 显示所有池子供用户选择质押 -->
-            <div class="space-y-3">
+            <div class="space-y-4">
               <div
                 v-for="contract in stakingContracts"
                 :key="contract.id"
                 @click="handleStakingContract(contract)"
-                class="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-indigo-300/20 hover:border-indigo-300/40 transition-all duration-300"
+                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700"
               >
                 <!-- 合约头部设计 -->
                 <div class="flex items-center justify-between mb-4">
@@ -605,58 +571,9 @@ const handleStakingContract = (contract: any) => {
               </div>
             </div>
           </div>
-          </div>
 
         </div>
       </div>
     </div>
+  </div>
 </template>
-
-<style scoped>
-/* 光效动画 */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%) skewX(-12deg);
-  }
-  100% {
-    transform: translateX(200%) skewX(-12deg);
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s ease-out;
-}
-
-.group:hover .group-hover\:animate-shimmer {
-  animation: shimmer 2s ease-out;
-}
-
-/* 文字渐变效果 */
-.bg-clip-text {
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* 增强阴影效果 */
-.drop-shadow-lg {
-  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
-}
-
-/* 按钮悬停增强 */
-button:hover {
-  filter: brightness(1.1);
-}
-
-/* 响应式调整 */
-@media (max-width: 640px) {
-  .text-4xl {
-    font-size: 2rem;
-    line-height: 1;
-  }
-
-  .text-3xl {
-    font-size: 1.875rem;
-    line-height: 1;
-  }
-}
-</style>
