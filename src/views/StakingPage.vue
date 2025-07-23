@@ -611,7 +611,6 @@ const handleStakingContract = (contract: any) => {
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
