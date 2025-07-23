@@ -54,12 +54,9 @@ const navigateTo = (path: string) => {
         class="flex flex-col items-center py-1 transition-all duration-300"
         :class="currentRoute === '/staking' ? 'text-alpha-primary' : 'text-gray-400 hover:text-gray-200'"
       >
-        <img
-          :src="'https://wufeng98.cn/imgServerApi/images/6f4c3eff-a594-49a5-82a2-be9e4a808452.png'"
-          class="w-6 h-6"
-          :class="currentRoute !== '/staking' ? 'opacity-40' : ''"
-          alt="质押"
-        />
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
         <span class="text-xs mt-1">{{ t('nav.staking') }}</span>
       </button>
 
@@ -68,12 +65,9 @@ const navigateTo = (path: string) => {
         class="flex flex-col items-center py-1 transition-all duration-300"
         :class="currentRoute === '/node' ? 'text-alpha-primary' : 'text-gray-400 hover:text-gray-200'"
       >
-        <img
-          :src="'https://wufeng98.cn/imgServerApi/images/dec88fbd-3e2c-42f7-998b-7f53ed650728.png'"
-          class="w-6 h-6"
-          :class="currentRoute !== '/node' ? 'opacity-40' : ''"
-          alt="节点"
-        />
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+        </svg>
         <span class="text-xs mt-1">{{ t('nav.node') }}</span>
       </button>
     </div>
