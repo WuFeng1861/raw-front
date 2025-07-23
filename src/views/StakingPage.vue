@@ -435,12 +435,40 @@ const handleStakingContract = (contract: any) => {
 
                 <!-- 质押信息网格 -->
                   <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-violet-300 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                    <p class="font-bold text-base break-all text-violet-200">{{ staking.yearRate }}</p>
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-violet-300 text-xs font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        {{ t('staking.annual_rate') }}
+                      </p>
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-indigo-300 text-xs font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ t('staking.staking_time') }}
+                      </p>
+                    </div>
+                    <p class="font-black text-lg text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-blue-300">{{ contract.lockupPeriod }}</p>
                   </div>
                   <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
-                    <p class="text-indigo-300 text-sm mb-1">{{ t('staking.staking_reward') }}</p>
-                    <p class="font-bold text-base break-all text-indigo-200">{{ formatNumber(staking.stakingReward) }}</p>
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-indigo-300 text-xs font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ t('staking.staking_reward') }}
+                      </p>
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-blue-300 text-xs font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        {{ t('staking.annual_rate') }}
+                      </p>
+                    </div>
+                    <p class="font-black text-lg text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300">{{ contract.yearRate }}</p>
                   </div>
                 </div>
               </div>
@@ -490,10 +518,17 @@ const handleStakingContract = (contract: any) => {
             <div class="space-y-3">
               <div
                 v-for="contract in stakingContracts"
-                :key="contract.id"
+                class="w-full py-3 text-white font-bold rounded-full transition-all duration-300 hover:scale-105 relative overflow-hidden group"
                 @click="handleStakingContract(contract)"
                 class="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-indigo-300/20 hover:border-indigo-300/40 transition-all duration-300"
               >
+                <!-- 按钮光效 -->
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-full group-hover:animate-shimmer"></div>
+                
+                <span class="relative z-10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
                 <!-- 合约头部设计 -->
                 <div class="flex items-center justify-between mb-4">
                   <!-- 池子等级图标和名称 -->
@@ -602,6 +637,7 @@ const handleStakingContract = (contract: any) => {
                 >
                   {{ t('staking.add_staking') }}
                 </button>
+                </span>
               </div>
             </div>
           </div>
