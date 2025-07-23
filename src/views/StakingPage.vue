@@ -518,9 +518,8 @@ const handleStakingContract = (contract: any) => {
             <div class="space-y-3">
               <div
                 v-for="contract in stakingContracts"
-                class="w-full py-3 text-white font-bold rounded-full transition-all duration-300 hover:scale-105 relative overflow-hidden group"
+                class="w-full py-3 text-white font-bold rounded-full transition-all duration-300 hover:scale-105 relative overflow-hidden group bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-indigo-300/20 hover:border-indigo-300/40 transition-all duration-300"
                 @click="handleStakingContract(contract)"
-                class="bg-black/40 backdrop-blur-sm rounded-xl p-4 border border-indigo-300/20 hover:border-indigo-300/40 transition-all duration-300"
               >
                 <!-- 按钮光效 -->
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-full group-hover:animate-shimmer"></div>
