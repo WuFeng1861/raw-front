@@ -17,12 +17,6 @@ export const performUnstaking = async (
   stakeId: string,
   t: Function
 ): Promise<{ status: boolean, message: string, data: any }> => {
-  // 暂时关闭
-  return {
-    status: false,
-    message: t('staking.errors.not_start'),
-    data: null
-  };
   const walletStore = useWalletStore();
   
   // 检查钱包是否连接
@@ -168,19 +162,25 @@ export interface ProcessedStakeRecord {
   stakeStartTime: number;
   stakeId: string;
 }
+const poolInfoCache = {};
 
 // 根据poolId获取池子信息
 const getPoolInfo = (pool: any, t?: Function) => {
-  let apr = Number(pool.apr);
-  if (apr >= 700) {
-    return {
+  let id = Number(pool.id) || 0;
+  if (id && poolInfoCache[id]) {
+    return poolInfoCache[id];
+  }
+  let apr = Number(pool.dividendRatio);
+  let result= {};
+  if (apr >= 50) {
+    result = {
       poolType: 'gold' as const,
       poolName: t?t('staking.gold_pool'): '金池',
       poolColor: '#FFD700',
       poolGradient: 'from-yellow-400 to-yellow-600'
     };
-  } else if (apr >= 500) {
-    return {
+  } else if (apr >= 40) {
+    result = {
       poolType: 'silver' as const,
       poolName: t?t('staking.silver_pool'): '银池',
       poolColor: '#C0C0C0',
@@ -188,13 +188,17 @@ const getPoolInfo = (pool: any, t?: Function) => {
     };
   } else {
     // 其他所有id都归类为铜池
-    return {
+    result = {
       poolType: 'bronze' as const,
-      poolName: t?t('staking.bronze_pool'): '铜池',
+      poolName: t ? t('staking.bronze_pool') : '铜池',
       poolColor: '#CD7F32',
       poolGradient: 'from-orange-400 to-orange-600'
     };
   }
+  if(id) {
+    poolInfoCache[id] = result;
+  }
+  return result;
 };
 
 // 获取用户所有质押记录
@@ -236,29 +240,29 @@ export const getUserStakes = async (forceUpdate: boolean = false, t?: Function):
     const dividendsMap = await getBatchStakeDividendsWithCache(stakeIds, forceUpdate);
     
     // 处理质押数据
-    const processedStakes: ProcessedStakeRecord[] = filteredStakes
-      .map((stake: any, index: number) => {
-        const poolInfo = getPoolInfo(stake.poolId.toString(), t);
-        const amount = wallet.weiToEth(stake.amount);
-        const apr = (Number(stake.lockedAPR)).toString();
-        const stakeStartTime = Number(stake.stakeStartTime);
-        const stakeId = stake.stakeId.toString();
-        
-        // 从缓存中获取真实的质押收益
-        const stakingReward = dividendsMap.get(stakeId) || '0';
-        
-        return {
-          id: stakeId,
-          poolNumber: Number(stake.poolId),
-          ...poolInfo,
-          stakingAmount: amount,
-          yearRate: `${apr}%`,
-          status: t ? t('staking.status_active') : '进行中',
-          statusColor: '#5BF655',
-          stakingReward,
-          stakeStartTime,
-          stakeId
-        };
+    const processedStakes: ProcessedStakeRecord[] = [];
+    for (let i = 0; i < filteredStakes.length; i++) {
+      let stake = filteredStakes[i];
+      let index = i;
+      const poolInfo = getPoolInfo({...stake, id: stake.poolId}, t);
+      const amount = wallet.weiToEth(stake.amount);
+      const apr = (Number(stake.lockedAPR)).toString();
+      const stakeStartTime = Number(stake.stakeStartTime);
+      const stakeId = stake.stakeId.toString();
+  
+      // 从缓存中获取真实的质押收益
+      const stakingReward = dividendsMap.get(stakeId) || '0';
+      processedStakes.push(<ProcessedStakeRecord>{
+        id: stakeId,
+        poolNumber: Number(stake.poolId),
+        ...poolInfo,
+        stakingAmount: amount,
+        yearRate: `${apr}%`,
+        status: t ? t('staking.status_active') : '进行中',
+        statusColor: '#5BF655',
+        stakingReward,
+        stakeStartTime,
+        stakeId
       });
     
     console.log('处理后的质押数据:', processedStakes);
@@ -282,12 +286,6 @@ export const performStaking = async (
   amount: string,
   t: Function
 ): Promise<{ status: boolean, message: string, data: any }> => {
-  // 暂时关闭
-  return {
-    status: false,
-    message: t('staking.errors.not_start'),
-    data: null
-  };
   const walletStore = useWalletStore();
   
   // 检查钱包是否连接
@@ -517,6 +515,10 @@ export const getAllPoolsInfo = async (forceUpdate: boolean = false, t?: Function
       const apr = (Number(pool.apr)).toString();
       const lockupPeriod = t ? formatLockupPeriod(pool.lockupPeriod.toString(), t) : pool.lockupPeriod.toString();
       const dividendRate = (Number(pool.dividendRate)).toString();
+      getPoolInfo({
+        id: Number(poolId),
+        dividendRatio: pool.dividendRatio
+      })
       console.log(totalAmount, maxAmount, pool.totalStaked, pool.maxStakeAmount, '获取所有质押池信息');
       return {
         id: Number(poolId),
@@ -949,12 +951,6 @@ export const claimPoolDividends = async (poolId: string, t: Function): Promise<{
 
 // 转移质押池分红地址
 export const transferPoolOwner = async (poolId: string, newAddress: string, t: Function): Promise<{ status: boolean, message: string, data: any }> => {
-  // 暂时关闭
-  return {
-    status: false,
-    message: t('staking.errors.not_start'),
-    data: null
-  };
   const walletStore = useWalletStore();
   // 检查钱包是否连接
   if (!walletStore.address) {
@@ -1064,7 +1060,7 @@ export const getNodeMessage = async (t: Function) => {
     }
     for (let i = 0; i < nodeList.length; i++) {
       const node = nodeList[i];
-      let nodeType = getPoolInfo({apr: node.apr}, t).poolType;
+      let nodeType = getPoolInfo({dividendRatio: node.dividendRatio}, t).poolType;
       const result = {};
       const payNumber = (Number(node.payNumber) + morePayNumber[nodeType]) > nodePoints[nodeType] ? nodePoints[nodeType] : (Number(node.payNumber) + morePayNumber[nodeType]);
       result['id'] = i + 1;
