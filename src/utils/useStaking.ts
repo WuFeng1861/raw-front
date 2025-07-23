@@ -264,6 +264,7 @@ export const getUserStakes = async (forceUpdate: boolean = false, t?: Function):
         stakeStartTime,
         stakeId
       });
+    }
     
     console.log('处理后的质押数据:', processedStakes);
     
