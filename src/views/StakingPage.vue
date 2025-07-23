@@ -441,7 +441,7 @@ const handleStakingContract = (contract: any) => {
                   </div>
                   <div class="rounded-lg p-3 bg-black/30 border border-indigo-300/20">
                     <p class="text-indigo-300 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                    <p class="font-bold text-base break-all text-indigo-200">{{ contract.yearRate }}</p>
+                    <p class="font-bold text-base break-all text-indigo-200">{{ staking.yearRate }}</p>
                   </div>
                 </div>
               </div>
