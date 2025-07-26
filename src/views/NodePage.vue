@@ -29,7 +29,7 @@ const nodeList = ref([
     uTokens: 2000,
     members: 2000,
     color: '#FFD700', // 金色
-    bgGradient: 'from-yellow-400 to-yellow-600',
+    bgGradient: '',
     buttonText: 'click_exchange',
     buttonDisabled: false
   },
@@ -44,7 +44,7 @@ const nodeList = ref([
     uTokens: 500,
     members: 500,
     color: '#C0C0C0', // 银色
-    bgGradient: 'from-gray-300 to-gray-500',
+    bgGradient: '',
     buttonText: 'click_exchange',
     buttonDisabled: false
   },
@@ -59,7 +59,7 @@ const nodeList = ref([
     uTokens: 100,
     members: 100,
     color: '#CD7F32', // 铜色
-    bgGradient: 'from-orange-400 to-orange-600',
+    bgGradient: '',
     buttonText: 'click_exchange',
     buttonDisabled: false
   }
@@ -111,13 +111,7 @@ const confirmExchange = async (type: string, amount: string) => {
 
 // 处理节点卡片点击
 const handleNodeClick = (node: any) => {
-  let nodeType = 'gold';
-  if (node.type === 'silver_node') {
-    nodeType = 'silver';
-  } else if (node.type === 'bronze_node') {
-    nodeType = 'bronze';
-  }
-  router.push(`/node/${nodeType}`);
+
 };
 
 onMounted(async () => {
@@ -145,66 +139,98 @@ onMounted(async () => {
         </div>
       </header>
 
-      <!-- Main Content -->
       <div class="px-4 py-6">
         <!-- 节点列表 -->
-        <div class="space-y-4">
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div
               v-for="node in nodeList"
               :key="node.id"
               @click="handleNodeClick(node)"
-              class="rounded-2xl p-6 shadow-lg relative overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              class="relative rounded-2xl p-5 shadow-lg cursor-pointer
+             border border-[#FFD97D]/40
+             hover:shadow-[0_8px_24px_rgba(255,201,76,0.25)]
+             hover:scale-[1.02]
+             transition-all duration-300"
               :class="`bg-gradient-to-br ${node.bgGradient}`"
           >
-            <!-- 节点类型图标和标题 -->
-            <div class="flex items-center mb-4">
-              <!-- 节点图标 -->
-              <div class="w-8 h-8 rounded-full flex items-center justify-center mr-3 bg-white bg-opacity-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
-                </svg>
+            <!-- 节点图标 + 标题 + 份额（右对齐） -->
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex items-center space-x-3">
+                <!-- 图标 -->
+                <div
+                    class="w-10 h-10 rounded-full flex items-center justify-center
+                   bg-gradient-to-br from-[#FFD97D] to-[#FFC94C]"
+                >
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                  >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-[#D8963F]">
+                    {{ t(`node.${node.type}`) }}
+                  </h3>
+                  <p class="text-xs text-gray-600">节点 ID: {{ node.id }}</p>
+                </div>
               </div>
-              <h3 class="text-xl font-bold text-white">{{ t(`node.${node.type}`) }}</h3>
-              <div class="ml-auto text-right">
-                <p class="text-white font-bold text-lg">{{ node.points }}份</p>
-                <p class="text-white text-sm opacity-80">{{ node.pointsNow }}/{{ node.totalPoints }}</p>
+
+              <!-- 份额 -->
+              <div class="text-right">
+                <p class="font-bold text-[#D8963F] text-lg">{{ node.points }} 份</p>
+                <p class="text-xs text-gray-500">{{ node.pointsNow }}/{{ node.totalPoints }}</p>
               </div>
             </div>
 
             <!-- 进度条 -->
-            <div class="mb-4">
-              <div class="w-full bg-white bg-opacity-20 rounded-full h-2">
+            <div class="mb-3">
+              <div class="w-full bg-[#FFD97D]/20 rounded-full h-2">
                 <div
-                    class="bg-white h-2 rounded-full transition-all duration-300"
+                    class="bg-gradient-to-r from-[#FFD97D] to-[#FFC94C] h-2 rounded-full"
                     :style="`width: ${node.progress}%`"
                 ></div>
               </div>
             </div>
 
-            <!-- 代币信息 -->
-            <div class="flex items-center justify-between mb-4">
+            <!-- 代币 & 成员信息 -->
+            <div class="flex items-center justify-between mb-4 text-sm">
               <div class="flex items-center space-x-4">
-                <!-- 代币数量 -->
                 <div class="flex items-center">
-                  <div class="w-4 h-4 rounded-full bg-white mr-2"></div>
-                  <span class="text-white font-medium">{{ node.tokens }}{{ t('node.million') }}</span>
+                  <div class="w-4 h-4 rounded-full bg-[#FFD97D] mr-1.5"></div>
+                  <span class="text-gray-700 font-medium"
+                  >{{ node.tokens }}{{ t('node.million') }}</span
+                  >
                 </div>
-                <!-- U代币数量 -->
                 <div class="flex items-center">
-                  <div class="w-4 h-4 rounded-full bg-white bg-opacity-60 mr-2"></div>
-                  <span class="text-white font-medium">{{ node.uTokens }} U</span>
+                  <div class="w-4 h-4 rounded-full bg-[#FFC94C] mr-1.5"></div>
+                  <span class="text-gray-700 font-medium">{{ node.uTokens }} U</span>
                 </div>
               </div>
-              <!-- 成员数量 -->
-              <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white mr-1" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              <div class="flex items-center text-gray-600">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 mr-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                  <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
                 </svg>
-                <span class="text-white text-sm">{{ t('node.contribution_value') }} {{ node.members }}</span>
+                <span>{{ node.members }}</span>
               </div>
             </div>
 
@@ -212,17 +238,22 @@ onMounted(async () => {
             <button
                 @click.stop="handleExchange(node)"
                 :disabled="node.buttonDisabled"
-                class="w-full py-3 text-black font-bold rounded-full transition-all duration-300 bg-white bg-opacity-90 hover:bg-opacity-100"
-                :class="node.buttonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'"
+                class="w-full py-2.5 font-bold rounded-full text-sm
+               bg-gradient-to-r from-[#FFD97D] to-[#FFC94C]
+               hover:shadow-lg
+               disabled:opacity-50 disabled:cursor-not-allowed
+               transition-all duration-300"
             >
               {{ t(`node.${node.buttonText}`) }}
             </button>
 
-            <!-- 装饰性背景元素 -->
+            <!-- 装饰性金色光斑 -->
             <div
-                class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-y-16 translate-x-16"></div>
+                class="absolute top-0 right-0 w-28 h-28 bg-[#FFD97D]/10 rounded-full blur-2xl -translate-y-14 translate-x-14"
+            ></div>
             <div
-                class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-5 rounded-full translate-y-12 -translate-x-12"></div>
+                class="absolute bottom-0 left-0 w-20 h-20 bg-[#FFC94C]/10 rounded-full blur-xl translate-y-10 -translate-x-10"
+            ></div>
           </div>
         </div>
       </div>

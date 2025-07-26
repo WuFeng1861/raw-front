@@ -62,7 +62,7 @@ const nodeConfig = computed(() => {
       color: '#FFD700',
       gradient: 'from-yellow-300 via-yellow-400 to-yellow-500',
       bgPattern: 'radial-gradient(circle at 30% 40%, rgba(255,215,0,0.3), transparent 70%)',
-      decorativeIcons: ['✨', '💎', '⭐', '🔥']
+      decorativeIcons: ["🏅","🧿","🔑","⚖️"]
     }
   } else if (type === 'silver_node') {
     return {
@@ -71,7 +71,7 @@ const nodeConfig = computed(() => {
       color: '#C0C0C0',
       gradient: 'from-gray-300 via-gray-400 to-gray-500',
       bgPattern: 'radial-gradient(circle at 30% 40%, rgba(192,192,192,0.3), transparent 70%)',
-      decorativeIcons: ['⚡', '💫', '🌟', '🔱']
+      decorativeIcons: ["🏅","🧿","🔑","⚖️"]
     }
   } else {
     return {
@@ -80,7 +80,7 @@ const nodeConfig = computed(() => {
       color: '#CD7F32',
       gradient: 'from-orange-300 via-orange-400 to-orange-500',
       bgPattern: 'radial-gradient(circle at 30% 40%, rgba(205,127,50,0.3), transparent 70%)',
-      decorativeIcons: ['⚡', '🌟', '🔸', '💥']
+      decorativeIcons: ["🏅","🧿","🔑","⚖️"]
     }
   }
 })
@@ -140,6 +140,199 @@ watch(exchangeType, () => {
 
 <template>
   <Transition name="modal">
+    <!--<div-->
+    <!--    v-if="show"-->
+    <!--    class="fixed inset-0 z-50 flex items-center justify-center p-4"-->
+    <!--    @click.self="handleClose"-->
+    <!--&gt;-->
+    <!--  &lt;!&ndash; 遮罩层 &ndash;&gt;-->
+    <!--  <div-->
+    <!--      class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm"-->
+    <!--      @click="handleClose"-->
+    <!--  ></div>-->
+
+    <!--  &lt;!&ndash; 弹窗容器 - 优化尺寸 &ndash;&gt;-->
+    <!--  <div-->
+    <!--      class="relative w-full max-w-sm max-h-[85vh] rounded-3xl z-10 overflow-hidden shadow-2xl transform-gpu flex flex-col"-->
+    <!--      @click.stop-->
+    <!--  >-->
+    <!--    &lt;!&ndash; 节点主题背景 &ndash;&gt;-->
+    <!--    <div class="absolute inset-0 opacity-90"-->
+    <!--         :style="`background: linear-gradient(135deg, ${nodeConfig.color}15 0%, ${nodeConfig.color}05 50%, ${nodeConfig.color}15 100%)`"></div>-->
+
+    <!--    &lt;!&ndash; 装饰性背景图案 &ndash;&gt;-->
+    <!--    <div class="absolute inset-0 opacity-20"-->
+    <!--         :style="`background: ${nodeConfig.bgPattern}`"></div>-->
+
+    <!--    &lt;!&ndash; 内容区域 &ndash;&gt;-->
+    <!--    <div class="relative bg-gray-900/95 backdrop-blur-md border border-yellow-300/20 rounded-3xl flex flex-col h-full">-->
+
+    <!--      &lt;!&ndash; 可滚动的内容区域 &ndash;&gt;-->
+    <!--      <div-->
+    <!--          class="flex-1 overflow-y-auto p-6 pb-2"-->
+    <!--          style="scrollbar-width: none; -ms-overflow-style: none;"-->
+    <!--      >-->
+
+    <!--        &lt;!&ndash; 关闭按钮 &ndash;&gt;-->
+    <!--        <button-->
+    <!--            @click="handleClose"-->
+    <!--            class="absolute right-4 top-4 text-yellow-100 hover:text-white z-10 p-2 rounded-full hover:bg-white/10 transition-all duration-300"-->
+    <!--        >-->
+    <!--          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+    <!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />-->
+    <!--          </svg>-->
+    <!--        </button>-->
+
+    <!--        &lt;!&ndash; 节点卡片展示 &ndash;&gt;-->
+    <!--        <div class="text-center mb-6 pt-4">-->
+    <!--          &lt;!&ndash; 主节点图标 &ndash;&gt;-->
+    <!--          <div class="relative mb-4">-->
+    <!--            <div class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center relative overflow-hidden"-->
+    <!--                 :style="`background: linear-gradient(135deg, ${nodeConfig.gradient}); box-shadow: 0 8px 32px rgba(0,0,0,0.3)`">-->
+    <!--              &lt;!&ndash; 光泽效果 &ndash;&gt;-->
+    <!--              <div class="absolute inset-1 rounded-xl bg-gradient-to-br from-white/30 to-transparent"></div>-->
+
+    <!--              &lt;!&ndash; 节点图标 &ndash;&gt;-->
+    <!--              <img-->
+    <!--                  :src="nodeConfig.icon"-->
+    <!--                  :alt="nodeConfig.name"-->
+    <!--                  class="w-12 h-12 z-10 object-contain"-->
+    <!--              />-->
+
+    <!--              &lt;!&ndash; 装饰性小图标 &ndash;&gt;-->
+    <!--              <div-->
+    <!--                  v-for="(icon, index) in nodeConfig.decorativeIcons"-->
+    <!--                  :key="index"-->
+    <!--                  class="absolute text-sm animate-pulse"-->
+    <!--                  :style="`-->
+    <!--                  ${index === 0 ? 'top: -8px; right: -8px;' : ''}-->
+    <!--                  ${index === 1 ? 'bottom: -8px; left: -8px;' : ''}-->
+    <!--                  ${index === 2 ? 'top: -8px; left: -8px;' : ''}-->
+    <!--                  ${index === 3 ? 'bottom: -8px; right: -8px;' : ''}-->
+    <!--                  animation-delay: ${index * 0.5}s;-->
+    <!--                `"-->
+    <!--              >-->
+    <!--                {{ icon }}-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </div>-->
+
+    <!--          <h3 class="text-xl font-bold text-white mb-2">-->
+    <!--            {{ nodeConfig.name }}-->
+    <!--          </h3>-->
+
+    <!--          <div class="w-16 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto rounded-full"></div>-->
+    <!--        </div>-->
+
+    <!--        &lt;!&ndash; 兑换类型选择 &ndash;&gt;-->
+    <!--        <div class="grid grid-cols-2 gap-3 mb-5">-->
+    <!--          <button-->
+    <!--              @click="switchExchangeType('token')"-->
+    <!--              :class="[-->
+    <!--              'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300 transform-gpu',-->
+    <!--              exchangeType === 'token'-->
+    <!--                ? 'bg-yellow-400 text-gray-900 shadow-lg scale-105'-->
+    <!--                : 'bg-white/20 text-white hover:bg-white/30'-->
+    <!--            ]"-->
+    <!--          >-->
+    <!--            <div class="flex items-center justify-center space-x-1">-->
+    <!--              <img-->
+    <!--                  src="https://wufeng98.cn/imgServerApi/images/4d35f283-bf43-459b-be74-a1c1810f19a6.png"-->
+    <!--                  alt="RWA"-->
+    <!--                  class="w-5 h-5 object-contain"-->
+    <!--              />-->
+    <!--              <span class="text-sm">RWA</span>-->
+    <!--            </div>-->
+    <!--          </button>-->
+
+    <!--          <button-->
+    <!--              @click="switchExchangeType('u')"-->
+    <!--              :class="[-->
+    <!--              'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300 transform-gpu',-->
+    <!--              exchangeType === 'u'-->
+    <!--                ? 'bg-green-400 text-gray-900 shadow-lg scale-105'-->
+    <!--                : 'bg-white/20 text-white hover:bg-white/30'-->
+    <!--            ]"-->
+    <!--          >-->
+    <!--            <div class="flex items-center justify-center space-x-1">-->
+    <!--              <img-->
+    <!--                  src="https://wufeng98.cn/imgServerApi/images/8b4ac19c-a29c-490f-9a91-6ffe467fed7e.png"-->
+    <!--                  alt="USDT"-->
+    <!--                  class="w-5 h-5 object-contain"-->
+    <!--              />-->
+    <!--              <span class="text-sm">USDT</span>-->
+    <!--            </div>-->
+    <!--          </button>-->
+    <!--        </div>-->
+
+    <!--        &lt;!&ndash; 兑换信息卡片 &ndash;&gt;-->
+    <!--        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-5 border border-white/20">-->
+    <!--          <div class="space-y-3">-->
+    <!--            &lt;!&ndash; 所需数量 &ndash;&gt;-->
+    <!--            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">-->
+    <!--              <span class="text-white/80 text-sm flex items-center">-->
+    <!--                <span class="mr-2">⚡</span>-->
+    <!--                {{ t('node.required_amount') }}-->
+    <!--              </span>-->
+    <!--              <span class="text-yellow-200 font-bold">{{ currentExchangeInfo.price }} {{ currentExchangeInfo.unit }}</span>-->
+    <!--            </div>-->
+
+    <!--            &lt;!&ndash; 将获得 &ndash;&gt;-->
+    <!--            <div class="flex justify-between items-center p-3 bg-green-500/20 rounded-lg border border-green-400/30">-->
+    <!--              <span class="text-white/80 text-sm flex items-center">-->
+    <!--                <span class="mr-2">🎁</span>-->
+    <!--                {{ t('node.will_receive') }}-->
+    <!--              </span>-->
+    <!--              <span class="text-green-300 font-bold">1 {{ nodeConfig.name }}</span>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </div>-->
+
+    <!--        &lt;!&ndash; 底部间距 &ndash;&gt;-->
+    <!--        <div class="h-4"></div>-->
+    <!--      </div>-->
+
+    <!--      &lt;!&ndash; 固定在底部的按钮区域 &ndash;&gt;-->
+    <!--      <div class="flex-shrink-0 p-6 pt-3 bg-gradient-to-t from-black/30 to-transparent">-->
+    <!--        <div class="grid grid-cols-2 gap-3">-->
+    <!--          <button-->
+    <!--              @click="handleClose"-->
+    <!--              class="py-3 px-4 rounded-xl font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300"-->
+    <!--          >-->
+    <!--            {{ t('common.cancel') }}-->
+    <!--          </button>-->
+
+    <!--          <button-->
+    <!--              @click="handleConfirm"-->
+    <!--              class="py-3 px-4 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"-->
+    <!--              :style="`background: linear-gradient(135deg, ${nodeConfig.gradient}); box-shadow: 0 6px 20px ${nodeConfig.color}60, 0 0 30px ${nodeConfig.color}40; filter: brightness(1.2);`"-->
+    <!--          >-->
+    <!--            <div class="flex items-center justify-center space-x-1" style="color: #FFD700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">-->
+    <!--              <span>⚡</span>-->
+    <!--              <span class="text-sm">{{ t('node.confirm_purchase') }}</span>-->
+    <!--            </div>-->
+    <!--          </button>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; 装饰性粒子效果 &ndash;&gt;-->
+    <!--    <div-->
+    <!--        v-for="(icon, index) in ['✨', '💫', '⭐', '🌟']"-->
+    <!--        :key="index"-->
+    <!--        class="absolute w-2 h-2 text-yellow-400 animate-pulse pointer-events-none"-->
+    <!--        :style="`-->
+    <!--        ${index === 0 ? 'top: 10%; right: 15%;' : ''}-->
+    <!--        ${index === 1 ? 'top: 20%; left: 10%;' : ''}-->
+    <!--        ${index === 2 ? 'bottom: 30%; right: 20%;' : ''}-->
+    <!--        ${index === 3 ? 'bottom: 20%; left: 15%;' : ''}-->
+    <!--        animation-delay: ${index * 0.8}s;-->
+    <!--      `"-->
+    <!--    >-->
+    <!--      {{ icon }}-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
     <div
         v-if="show"
         class="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -147,81 +340,92 @@ watch(exchangeType, () => {
     >
       <!-- 遮罩层 -->
       <div
-          class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm"
+          class="absolute inset-0 bg-black/50 backdrop-blur-sm"
           @click="handleClose"
       ></div>
 
-      <!-- 弹窗容器 - 优化尺寸 -->
+      <!-- 弹窗容器 -->
       <div
-          class="relative w-full max-w-sm max-h-[85vh] rounded-3xl z-10 overflow-hidden shadow-2xl transform-gpu flex flex-col"
+          class="relative w-full max-w-sm max-h-[85vh] rounded-3xl z-10 overflow-hidden shadow-2xl flex flex-col"
           @click.stop
       >
-        <!-- 节点主题背景 -->
-        <div class="absolute inset-0 opacity-90"
-             :style="`background: linear-gradient(135deg, ${nodeConfig.color}15 0%, ${nodeConfig.color}05 50%, ${nodeConfig.color}15 100%)`"></div>
-
-        <!-- 装饰性背景图案 -->
-        <div class="absolute inset-0 opacity-20"
-             :style="`background: ${nodeConfig.bgPattern}`"></div>
+        <!-- 背景：淡金渐变 -->
+        <div
+            class="absolute inset-0 opacity-90"
+            style="
+        background: linear-gradient(
+          135deg,
+          #fff9ee 0%,
+          #fff4e0 50%,
+          #fff9ee 100%
+        );
+      "
+        ></div>
+        <!-- 装饰图案 -->
+        <div
+            class="absolute inset-0 opacity-20"
+            style="
+        background-image: radial-gradient(circle at 20% 20%, #ffd97d 0%, transparent 40%),
+                          radial-gradient(circle at 80% 80%, #ffc94c 0%, transparent 40%);
+      "
+        ></div>
 
         <!-- 内容区域 -->
-        <div class="relative bg-gray-900/95 backdrop-blur-md border border-yellow-300/20 rounded-3xl flex flex-col h-full">
-
-          <!-- 可滚动的内容区域 -->
+        <div
+            class="relative bg-[#FFFDF9]/95 backdrop-blur-md border border-[#FFD97D]/40 rounded-3xl flex flex-col h-full"
+        >
+          <!-- 可滚动区域 -->
           <div
               class="flex-1 overflow-y-auto p-6 pb-2"
-              style="scrollbar-width: none; -ms-overflow-style: none;"
+              style="scrollbar-width: none; -ms-overflow-style: none"
           >
-
             <!-- 关闭按钮 -->
             <button
                 @click="handleClose"
-                class="absolute right-4 top-4 text-yellow-100 hover:text-white z-10 p-2 rounded-full hover:bg-white/10 transition-all duration-300"
+                class="absolute right-4 top-4 text-[#D8963F] hover:text-[#B67B2E] z-10 p-2 rounded-full hover:bg-[#FFD97D]/20 transition"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+              >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
 
-            <!-- 节点卡片展示 -->
+            <!-- 节点卡片 -->
             <div class="text-center mb-6 pt-4">
-              <!-- 主节点图标 -->
-              <div class="relative mb-4">
-                <div class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center relative overflow-hidden"
-                     :style="`background: linear-gradient(135deg, ${nodeConfig.gradient}); box-shadow: 0 8px 32px rgba(0,0,0,0.3)`">
-                  <!-- 光泽效果 -->
-                  <div class="absolute inset-1 rounded-xl bg-gradient-to-br from-white/30 to-transparent"></div>
+              <!-- 主图标 -->
+            <!--  <div-->
+            <!--      class="relative w-20 h-20 mx-auto rounded-2xl flex items-center justify-center overflow-hidden"-->
+            <!--      style="-->
+            <!--  background: linear-gradient(135deg, #ffd97d 0%, #ffc94c 100%);-->
+            <!--  box-shadow: 0 8px 32px rgba(255, 201, 76, 0.3);-->
+            <!--"-->
+            <!--  >-->
+            <!--    <div-->
+            <!--        class="absolute inset-1 rounded-xl bg-gradient-to-br from-white/30 to-transparent"-->
+            <!--    ></div>-->
+            <!--    <img-->
+            <!--        :src="nodeConfig.icon"-->
+            <!--        :alt="nodeConfig.name"-->
+            <!--        class="w-12 h-12 z-10 object-contain"-->
+            <!--    />-->
+            <!--  </div>-->
 
-                  <!-- 节点图标 -->
-                  <img
-                      :src="nodeConfig.icon"
-                      :alt="nodeConfig.name"
-                      class="w-12 h-12 z-10 object-contain"
-                  />
-
-                  <!-- 装饰性小图标 -->
-                  <div
-                      v-for="(icon, index) in nodeConfig.decorativeIcons"
-                      :key="index"
-                      class="absolute text-sm animate-pulse"
-                      :style="`
-                      ${index === 0 ? 'top: -8px; right: -8px;' : ''}
-                      ${index === 1 ? 'bottom: -8px; left: -8px;' : ''}
-                      ${index === 2 ? 'top: -8px; left: -8px;' : ''}
-                      ${index === 3 ? 'bottom: -8px; right: -8px;' : ''}
-                      animation-delay: ${index * 0.5}s;
-                    `"
-                  >
-                    {{ icon }}
-                  </div>
-                </div>
-              </div>
-
-              <h3 class="text-xl font-bold text-white mb-2">
+              <h3 class="text-xl font-bold text-[#D8963F] mt-2 mb-1">
                 {{ nodeConfig.name }}
               </h3>
-
-              <div class="w-16 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto rounded-full"></div>
+              <div
+                  class="w-16 h-1 bg-gradient-to-r from-transparent via-[#D8963F]/50 to-transparent mx-auto rounded-full"
+              ></div>
             </div>
 
             <!-- 兑换类型选择 -->
@@ -229,15 +433,15 @@ watch(exchangeType, () => {
               <button
                   @click="switchExchangeType('token')"
                   :class="[
-                  'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300 transform-gpu',
-                  exchangeType === 'token'
-                    ? 'bg-yellow-400 text-gray-900 shadow-lg scale-105'
-                    : 'bg-white/20 text-white hover:bg-white/30'
-                ]"
+              'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300',
+              exchangeType === 'token'
+                ? 'bg-[#FFD97D] text-black shadow-lg scale-105'
+                : 'bg-[#FFD97D]/20 text-[#D8963F] hover:bg-[#FFD97D]/30'
+            ]"
               >
                 <div class="flex items-center justify-center space-x-1">
                   <img
-                      src="https://wufeng98.cn/imgServerApi/images/4d35f283-bf43-459b-be74-a1c1810f19a6.png"
+                      src="https://wufeng98.cn/imgServerApi/images/084ea8d1-3406-4ce0-8cca-c7c5e02de238.png"
                       alt="RWA"
                       class="w-5 h-5 object-contain"
                   />
@@ -248,11 +452,11 @@ watch(exchangeType, () => {
               <button
                   @click="switchExchangeType('u')"
                   :class="[
-                  'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300 transform-gpu',
-                  exchangeType === 'u'
-                    ? 'bg-green-400 text-gray-900 shadow-lg scale-105'
-                    : 'bg-white/20 text-white hover:bg-white/30'
-                ]"
+              'relative overflow-hidden py-3 px-3 rounded-xl font-medium transition-all duration-300',
+              exchangeType === 'u'
+                ? 'bg-[#FFC94C] text-black shadow-lg scale-105'
+                : 'bg-[#FFC94C]/20 text-[#D8963F] hover:bg-[#FFC94C]/30'
+            ]"
               >
                 <div class="flex items-center justify-center space-x-1">
                   <img
@@ -266,24 +470,35 @@ watch(exchangeType, () => {
             </div>
 
             <!-- 兑换信息卡片 -->
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-5 border border-white/20">
+            <div
+                class="bg-[#FFD97D]/10 backdrop-blur-sm rounded-xl p-4 mb-5 border border-[#FFD97D]/30"
+            >
               <div class="space-y-3">
                 <!-- 所需数量 -->
-                <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
-                  <span class="text-white/80 text-sm flex items-center">
-                    <span class="mr-2">⚡</span>
-                    {{ t('node.required_amount') }}
-                  </span>
-                  <span class="text-yellow-200 font-bold">{{ currentExchangeInfo.price }} {{ currentExchangeInfo.unit }}</span>
+                <div
+                    class="flex justify-between items-center p-3 bg-[#FFD97D]/10 rounded-lg"
+                >
+              <span class="text-[#D8963F]/90 text-sm flex items-center">
+                <span class="mr-2">⚡</span>
+                {{ t('node.required_amount') }}
+              </span>
+                  <span class="text-[#B67B2E] font-bold"
+                  >{{ currentExchangeInfo.price }}
+                {{ currentExchangeInfo.unit }}</span
+                  >
                 </div>
 
                 <!-- 将获得 -->
-                <div class="flex justify-between items-center p-3 bg-green-500/20 rounded-lg border border-green-400/30">
-                  <span class="text-white/80 text-sm flex items-center">
-                    <span class="mr-2">🎁</span>
-                    {{ t('node.will_receive') }}
-                  </span>
-                  <span class="text-green-300 font-bold">1 {{ nodeConfig.name }}</span>
+                <div
+                    class="flex justify-between items-center p-3 bg-[#FFC94C]/20 rounded-lg border border-[#FFC94C]/40"
+                >
+              <span class="text-[#D8963F]/90 text-sm flex items-center">
+                <span class="mr-2">🧸</span>
+                {{ t('node.will_receive') }}
+              </span>
+                  <span class="text-[#B67B2E] font-bold"
+                  >1 {{ nodeConfig.name }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -292,44 +507,49 @@ watch(exchangeType, () => {
             <div class="h-4"></div>
           </div>
 
-          <!-- 固定在底部的按钮区域 -->
-          <div class="flex-shrink-0 p-6 pt-3 bg-gradient-to-t from-black/30 to-transparent">
+          <!-- 固定在底部的按钮 -->
+          <div
+              class="flex-shrink-0 p-6 pt-3 bg-gradient-to-t from-[#FFF4E0]/60 to-transparent"
+          >
             <div class="grid grid-cols-2 gap-3">
               <button
                   @click="handleClose"
-                  class="py-3 px-4 rounded-xl font-bold text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  class="py-3 px-4 rounded-xl font-bold text-[#D8963F] bg-[#FFD97D]/20 border border-[#FFD97D]/40 hover:bg-[#FFD97D]/30 transition-all"
               >
                 {{ t('common.cancel') }}
               </button>
 
               <button
                   @click="handleConfirm"
-                  class="py-3 px-4 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                  :style="`background: linear-gradient(135deg, ${nodeConfig.gradient}); box-shadow: 0 6px 20px ${nodeConfig.color}60, 0 0 30px ${nodeConfig.color}40; filter: brightness(1.2);`"
+                  class="py-3 px-4 rounded-xl font-bold text-black transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  style="
+              background: linear-gradient(135deg, #ffd97d 0%, #ffc94c 100%);
+              box-shadow: 0 6px 20px rgba(255, 201, 76, 0.4);
+            "
               >
-                <div class="flex items-center justify-center space-x-1" style="color: #FFD700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                <div class="flex items-center justify-center space-x-1">
                   <span>⚡</span>
                   <span class="text-sm">{{ t('node.confirm_purchase') }}</span>
                 </div>
               </button>
             </div>
           </div>
-        </div>
 
-        <!-- 装饰性粒子效果 -->
-        <div
-            v-for="(icon, index) in ['✨', '💫', '⭐', '🌟']"
-            :key="index"
-            class="absolute w-2 h-2 text-yellow-400 animate-pulse pointer-events-none"
-            :style="`
-            ${index === 0 ? 'top: 10%; right: 15%;' : ''}
-            ${index === 1 ? 'top: 20%; left: 10%;' : ''}
-            ${index === 2 ? 'bottom: 30%; right: 20%;' : ''}
-            ${index === 3 ? 'bottom: 20%; left: 15%;' : ''}
-            animation-delay: ${index * 0.8}s;
-          `"
-        >
-          {{ icon }}
+          <!-- 装饰性粒子 -->
+          <div
+              v-for="(icon, index) in ['🎉', '🎀', '🌕', '🏵️']"
+              :key="index"
+              class="absolute w-3 h-3 text-[#FFD97D] animate-pulse pointer-events-none"
+              :style="`
+          ${index === 0 ? 'top: 10%; right: 15%;' : ''}
+          ${index === 1 ? 'top: 20%; left: 10%;' : ''}
+          ${index === 2 ? 'bottom: 30%; right: 20%;' : ''}
+          ${index === 3 ? 'bottom: 20%; left: 15%;' : ''}
+          animation-delay: ${index * 0.8}s;
+        `"
+          >
+            {{ icon }}
+          </div>
         </div>
       </div>
     </div>

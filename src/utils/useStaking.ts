@@ -192,7 +192,7 @@ const getPoolInfo = (pool: any, t?: Function) => {
       poolType: 'bronze' as const,
       poolName: t ? t('staking.bronze_pool') : '铜池',
       poolColor: '#CD7F32',
-      poolGradient: 'from-orange-400 to-orange-600'
+      poolGradient: 'from-red-400 to-red-600'
     };
   }
   if(id) {
@@ -1050,9 +1050,9 @@ export const getNodeMessage = async (t: Function) => {
       'bronze': '#CD7F32',
     };
     const nodeBgGradient = {
-      'gold': 'from-yellow-400 to-yellow-600',
-      'silver': 'from-gray-300 to-gray-500',
-      'bronze': 'from-orange-400 to-orange-600',
+      'gold': 'from-yellow-700 to-[#eda715]',
+      'silver': 'from-gray-800 to-[#9fb7e7]',
+      'bronze': 'from-red-100 to-[#676161]',
     };
     const morePayNumber = {
       'gold': 0,

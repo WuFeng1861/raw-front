@@ -291,7 +291,7 @@ const checkStakeUnlockable = (stake: ProcessedStakeRecord): { canUnstake: boolea
 
     return {
       canUnstake: false,
-      message: t('staking.lockup_period_remaining', { time: timeMessage })
+      message: t('staking.lockup_period_remaining', {time: timeMessage})
     };
   } else {
     // 锁定期已结束，可以解除质押
@@ -524,19 +524,20 @@ const handleStakeAction = async () => {
           </div>
         </div>
 
-        <!-- 索赔界面 -->
-        <div v-else-if="showClaimInterface && stakingDetail" class="rounded-2xl p-4 mb-6"
-             style="background: linear-gradient(135deg, rgba(124, 221, 61, 0.8) 0%, rgba(83, 203, 67, 0.8) 100%)">
+
+        <div v-else-if="showClaimInterface && stakingDetail"
+            class="rounded-2xl p-4 mb-6"
+            style="background: linear-gradient(135deg,rgba(255, 217, 125, 0.8) 0%,rgba(255, 201, 76, 0.8) 100%);">
           <!-- 顶部按钮组 -->
           <div class="grid grid-cols-2 gap-3 mb-6">
             <button
                 @click="handleAdd"
-                class="btn-primary py-3 text-black font-bold rounded-full bg-opacity-60"
+                class="bg-yellow-100/90 py-3 text-black font-bold rounded-full bg-opacity-60"
             >
               {{ t('common.add') }}
             </button>
             <button
-                class="btn-primary py-3 text-black font-bold rounded-full"
+                class="bg-yellow-100/90 py-3 text-black font-bold rounded-full"
             >
               {{ t('staking.claim_type') }}
             </button>
@@ -547,17 +548,23 @@ const handleStakeAction = async () => {
             <!-- 暂无质押记录 -->
             <div v-if="userStakesInPool.length === 0" class="text-center py-8">
               <div
-                  class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
+                  class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-yellow-700/60"
+              >
                 <div
-                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                    class="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-600/40 flex items-center justify-center"
+                >
                   <img
                       src="https://wufeng98.cn/imgServerApi/images/6f4c3eff-a594-49a5-82a2-be9e4a808452.png"
-                      class="w-8 h-8 opacity-40"
+                      class="w-8 h-8 opacity-60"
                       alt="质押"
                   />
                 </div>
-                <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.no_staking_records') }}</h3>
-                <p class="text-gray-400 text-sm">{{t('staking.no_staking_records_desc')}}</p>
+                <h3 class="text-lg font-medium text-white mb-2">
+                  {{ t('staking.no_staking_records') }}
+                </h3>
+                <p class="text-gray-400 text-sm">
+                  {{ t('staking.no_staking_records_desc') }}
+                </p>
               </div>
             </div>
 
@@ -565,124 +572,228 @@ const handleStakeAction = async () => {
             <div
                 v-for="stake in userStakesInPool"
                 :key="stake.id"
-                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700"
+                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-yellow-700/60"
             >
               <!-- 卡片标题 -->
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center text-left">
                   <!-- 索赔图标 -->
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"
-                       style="background: linear-gradient(135deg, #5BF655 0%, #4BD341 100%); box-shadow: 0 4px 15px rgba(91, 246, 85, 0.3);">
+                  <div
+                      class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"
+                      style="
+              background: linear-gradient(135deg, #ffd97d 0%, #ffc94c 100%);
+              box-shadow: 0 4px 15px rgba(255, 201, 76, 0.3);
+            "
+                  >
                     <!-- 内部光泽效果 -->
-                    <div class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"></div>
+                    <div
+                        class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"
+                    ></div>
                     <!-- 索赔图标 -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white z-10" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                      :class="`bg-gradient-to-br ${stake.poolGradient}`"
-                      style="box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 text-black z-10"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                      <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                     <!-- 装饰性光环 -->
-                    <div class="absolute -inset-1 rounded-full opacity-50"
-                         style="background: conic-gradient(from 0deg, #5BF655, transparent, #5BF655)"></div>
+                    <div
+                        class="absolute -inset-1 rounded-full opacity-50"
+                        style="
+                background: conic-gradient(from 0deg, #ffd97d, transparent, #ffd97d);
+              "
+                    ></div>
                   </div>
                   <!-- 索赔名称和类型 -->
                   <div>
-                    <h3 class="text-lg font-bold text-white">{{ t('staking.claim_type') }}</h3>
-                    <p class="text-gray-400 text-sm">{{ t('staking.staking_claim') }}</p>
+                    <h3 class="text-lg font-bold text-white">
+                      {{ t('staking.claim_type') }}
+                    </h3>
+                    <p class="text-gray-400 text-sm">
+                      {{ t('staking.staking_claim') }}
+                    </p>
                   </div>
                 </div>
 
                 <!-- 状态标签 -->
-                <div class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"
-                     :class="`bg-gradient-to-r ${stake.poolGradient}`">
+                <div
+                    class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"
+                    style="
+            background: linear-gradient(90deg, #ffd97d 0%, #ffc94c 100%);
+          "
+                >
                   <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1.5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3 w-3 mr-1.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                      <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
                     </svg>
-                    <span class="text-white font-medium">{{ stake.status }}</span>
+                    <span class="text-black font-medium">{{ stake.status }}</span>
                   </div>
                 </div>
               </div>
 
               <!-- 主要显示区域 - 质押收益 -->
-              <div class="relative overflow-hidden rounded-xl p-4 border-2 mb-4"
-                   :style="`border-color: ${stake.poolColor}; background: linear-gradient(135deg, ${stake.poolColor}15 0%, ${stake.poolColor}08 100%)`">
+              <div
+                  class="relative overflow-hidden rounded-xl p-4 border-2 mb-4"
+                  :style="`
+          border-color: #ffd97d;
+          background: linear-gradient(135deg, #ffd97d15 0%, #ffd97d08 100%);
+        `"
+              >
                 <!-- 背景装饰效果 -->
-                <div class="absolute inset-0 opacity-20"
-                     :style="`background: radial-gradient(circle at 20% 50%, ${stake.poolColor}40 0%, transparent 50%), radial-gradient(circle at 80% 50%, ${stake.poolColor}30 0%, transparent 50%)`"></div>
+                <div
+                    class="absolute inset-0 opacity-20"
+                    style="
+            background: radial-gradient(circle at 20% 50%, #ffd97d40 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, #ffd97d30 0%, transparent 50%);
+          "
+                ></div>
 
                 <!-- 闪烁装饰点 -->
-                <div class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
-                     :style="`background: ${stake.poolColor}; box-shadow: 0 0 10px ${stake.poolColor}`"></div>
-                <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
-                     :style="`background: ${stake.poolColor}; box-shadow: 0 0 8px ${stake.poolColor}; animation-delay: 0.5s`"></div>
+                <div
+                    class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
+                    style="background: #ffd97d; box-shadow: 0 0 10px #ffd97d"
+                ></div>
+                <div
+                    class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
+                    style="
+            background: #ffd97d;
+            box-shadow: 0 0 8px #ffd97d;
+            animation-delay: 0.5s;
+          "
+                ></div>
 
                 <!-- 内容区域 -->
                 <div class="relative z-10">
                   <div class="flex items-center justify-between mb-2">
                     <p class="text-gray-300 text-sm font-medium flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5"
-                           :style="`color: ${stake.poolColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 mr-1.5"
+                          style="color: #ffd97d"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                      >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                        />
                       </svg>
                       {{ t('staking.staking_reward') }}
                     </p>
                     <!-- 收益图标 -->
                     <div class="flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-pulse"
-                           :style="`color: ${stake.poolColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 animate-pulse"
+                          style="color: #ffd97d"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                      >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                     </div>
                   </div>
 
                   <!-- 收益显示 -->
                   <div class="flex items-baseline">
-                    <p class="text-white font-black text-xl break-all mr-2"
-                       :style="`text-shadow: 0 0 20px ${stake.poolColor}80, 0 0 40px ${stake.poolColor}40`">
+                    <p
+                        class="text-white font-black text-xl break-all mr-2"
+                        style="
+                text-shadow: 0 0 20px #ffd97d80, 0 0 40px #ffd97d40;
+              "
+                    >
                       {{ formatNumber(stake.stakingReward) }}
                     </p>
                     <span class="text-gray-400 text-sm font-medium">ALPHA</span>
                   </div>
 
                   <!-- 底部装饰线 -->
-                  <div class="mt-2 h-0.5 rounded-full opacity-60"
-                       :style="`background: linear-gradient(90deg, ${stake.poolColor} 0%, transparent 100%)`"></div>
+                  <div
+                      class="mt-2 h-0.5 rounded-full opacity-60"
+                      style="
+              background: linear-gradient(90deg, #ffd97d 0%, transparent 100%);
+            "
+                  ></div>
                 </div>
               </div>
 
               <!-- 详细信息网格 -->
               <div class="grid grid-cols-2 gap-3 mb-4">
                 <!-- 质押数量 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.staking_amount') }}</p>
+                <div
+                    class="bg-alpha-surface rounded-lg p-3 border border-yellow-700/60"
+                >
+                  <p class="text-gray-400 text-sm mb-1">
+                    {{ t('staking.staking_amount') }}
+                  </p>
                   <p class="text-white font-bold text-base">
-                    {{ formatNumber(stake.stakingAmount) }}</p>
+                    {{ formatNumber(stake.stakingAmount) }}
+                  </p>
                 </div>
 
                 <!-- 年化率 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                  <p class="font-bold text-base break-all" style="color: #5BF655">{{ stake.yearRate }}</p>
+                <div
+                    class="bg-alpha-surface rounded-lg p-3 border border-yellow-700/60"
+                >
+                  <p class="text-gray-400 text-sm mb-1">
+                    {{ t('staking.annual_rate') }}
+                  </p>
+                  <p class="font-bold text-base break-all" style="color: #ffd97d">
+                    {{ stake.yearRate }}
+                  </p>
                 </div>
 
                 <!-- 质押时间 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.staking_time') }}</p>
-                  <p class="text-white font-bold text-base">{{ stakingDetail?.lockupPeriod || '-' }}</p>
+                <div
+                    class="bg-alpha-surface rounded-lg p-3 border border-yellow-700/60"
+                >
+                  <p class="text-gray-400 text-sm mb-1">
+                    {{ t('staking.staking_time') }}
+                  </p>
+                  <p class="text-white font-bold text-base">
+                    {{ stakingDetail?.lockupPeriod || '-' }}
+                  </p>
                 </div>
 
                 <!-- 质押开始 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.staking_start') }}</p>
+                <div
+                    class="bg-alpha-surface rounded-lg p-3 border border-yellow-700/60"
+                >
+                  <p class="text-gray-400 text-sm mb-1">
+                    {{ t('staking.staking_start') }}
+                  </p>
                   <p class="text-white font-bold text-base">
-                    {{ new Date(stake.stakeStartTime * 1000).toLocaleDateString() }}</p>
+                    {{ new Date(stake.stakeStartTime * 1000).toLocaleDateString() }}
+                  </p>
                 </div>
-
               </div>
 
               <!-- 索赔按钮 -->
@@ -691,41 +802,206 @@ const handleStakeAction = async () => {
                   :disabled="isUnstaking"
                   class="w-full py-3 text-black font-bold rounded-full transition-all duration-300"
                   :class="[
-                    `bg-gradient-to-r ${stake.poolGradient}`,
-                    isUnstaking ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
-                  ]"
-                  :style="`box-shadow: 0 4px 15px ${stake.poolColor}40`"
+          'bg-gradient-to-r from-[#ffd97d] to-[#ffc94c]',
+          isUnstaking ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg',
+        ]"
+                  style="box-shadow: 0 4px 15px #ffd97d40"
               >
-                <span v-if="isUnstaking" class="flex items-center justify-center">
-                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none"
-                       viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  {{ t('common.processing') }}
-                </span>
+        <span v-if="isUnstaking" class="flex items-center justify-center">
+          <svg
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+          >
+            <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+            ></circle>
+            <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          {{ t('common.processing') }}
+        </span>
                 <span v-else>{{ t('staking.claim_type') }}</span>
               </button>
             </div>
           </div>
         </div>
-
         <!-- 质押详情界面 -->
-        <div v-else-if="stakingDetail" class="rounded-2xl p-4 mb-6"
-             style="background: linear-gradient(135deg, rgba(124, 221, 61, 0.8) 0%, rgba(83, 203, 67, 0.8) 100%)">
+        <!--<div v-else-if="stakingDetail" class="rounded-2xl p-4 mb-6"-->
+        <!--     style="background: linear-gradient(135deg, rgba(124, 221, 61, 0.8) 0%, rgba(83, 203, 67, 0.8) 100%)">-->
 
+        <!--  &lt;!&ndash; 顶部按钮组 &ndash;&gt;-->
+        <!--  <div class="grid grid-cols-2 gap-3 mb-6">-->
+        <!--    <button-->
+        <!--        @click="handleAdd"-->
+        <!--        class="btn-primary py-3 text-black font-bold rounded-full"-->
+        <!--    >-->
+        <!--      {{ t('common.add') }}-->
+        <!--    </button>-->
+        <!--    <button-->
+        <!--        @click="handleClaimButton"-->
+        <!--        class="btn-primary py-3 text-black font-bold rounded-full bg-opacity-60"-->
+        <!--    >-->
+        <!--      {{ t('staking.claim_type') }}-->
+        <!--    </button>-->
+        <!--  </div>-->
+
+        <!--  &lt;!&ndash; 质押金额卡片 &ndash;&gt;-->
+        <!--  <div-->
+        <!--      class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700 mb-4">-->
+        <!--    &lt;!&ndash; 质押金额标题和图标 &ndash;&gt;-->
+        <!--    <div class="flex items-center justify-between mb-4">-->
+        <!--      <div class="flex items-center">-->
+        <!--        &lt;!&ndash; 池子等级图标 &ndash;&gt;-->
+        <!--        <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"-->
+        <!--             :class="`bg-gradient-to-br ${stakingDetail?.poolGradient}`"-->
+        <!--             style="box-shadow: 0 4px 15px rgba(0,0,0,0.3);">-->
+        <!--          &lt;!&ndash; 内部光泽效果 &ndash;&gt;-->
+        <!--          <div class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"></div>-->
+        <!--          &lt;!&ndash; 池子图标 &ndash;&gt;-->
+        <!--          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white z-10" fill="none"-->
+        <!--               viewBox="0 0 24 24" stroke="currentColor">-->
+        <!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+        <!--                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>-->
+        <!--          </svg>-->
+        <!--          &lt;!&ndash; 装饰性光环 &ndash;&gt;-->
+        <!--          <div class="absolute -inset-1 rounded-full opacity-50"-->
+        <!--               :style="`background: conic-gradient(from 0deg, ${stakingDetail?.poolColor}, transparent, ${stakingDetail?.poolColor})`"></div>-->
+        <!--        </div>-->
+        <!--        &lt;!&ndash; 标题 &ndash;&gt;-->
+        <!--        <div class="text-left">-->
+        <!--          <h3 class="text-lg font-bold text-white">{{ t('staking.staking_amount') }}</h3>-->
+        <!--          <p class="text-gray-400 text-sm">{{ stakingDetail?.poolName }} {{ stakingDetail?.id }}</p>-->
+        <!--        </div>-->
+        <!--      </div>-->
+
+        <!--      &lt;!&ndash; 状态标签 &ndash;&gt;-->
+        <!--      <div class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"-->
+        <!--           :class="`bg-gradient-to-r ${stakingDetail?.poolGradient}`">-->
+        <!--        <div class="flex items-center">-->
+        <!--          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1.5" fill="none" viewBox="0 0 24 24"-->
+        <!--               stroke="currentColor">-->
+        <!--            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+        <!--                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>-->
+        <!--          </svg>-->
+        <!--          <span class="text-white font-medium">{{ stakingDetail?.status }}</span>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </div>-->
+
+        <!--    &lt;!&ndash; 质押金额显示 &ndash;&gt;-->
+        <!--    <div class="relative overflow-hidden rounded-xl p-4 border-2"-->
+        <!--         :style="`border-color: ${stakingDetail?.poolColor}; background: linear-gradient(135deg, ${stakingDetail?.poolColor}15 0%, ${stakingDetail?.poolColor}08 100%)`">-->
+        <!--      &lt;!&ndash; 背景装饰效果 &ndash;&gt;-->
+        <!--      <div class="absolute inset-0 opacity-20"-->
+        <!--           :style="`background: radial-gradient(circle at 20% 50%, ${stakingDetail?.poolColor}40 0%, transparent 50%), radial-gradient(circle at 80% 50%, ${stakingDetail?.poolColor}30 0%, transparent 50%)`"></div>-->
+
+        <!--      &lt;!&ndash; 闪烁装饰点 &ndash;&gt;-->
+        <!--      <div class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"-->
+        <!--           :style="`background: ${stakingDetail?.poolColor}; box-shadow: 0 0 10px ${stakingDetail?.poolColor}`"></div>-->
+        <!--      <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"-->
+        <!--           :style="`background: ${stakingDetail?.poolColor}; box-shadow: 0 0 8px ${stakingDetail?.poolColor}; animation-delay: 0.5s`"></div>-->
+
+        <!--      &lt;!&ndash; 内容区域 &ndash;&gt;-->
+        <!--      <div class="relative z-10 text-center">-->
+        <!--        &lt;!&ndash; 金额显示 &ndash;&gt;-->
+        <!--        <div class="flex items-center justify-center mb-2 gap-3">-->
+        <!--          &lt;!&ndash; 输入框 &ndash;&gt;-->
+        <!--          <input-->
+        <!--              v-model="inputAmount"-->
+        <!--              type="number"-->
+        <!--              class="bg-transparent text-white font-black text-lg text-left border-none outline-none w-32 no-spinner p-0 m-0"-->
+        <!--              :style="`text-shadow: 0 0 15px ${stakingDetail?.poolColor}80, 0 0 30px ${stakingDetail?.poolColor}40; color: white !important;`"-->
+        <!--              placeholder="5000"-->
+        <!--              step="0.01"-->
+        <!--              min="0"-->
+        <!--              @blur="handleInputChange"-->
+        <!--          />-->
+        <!--          <span class="text-white text-lg font-bold">Alpha</span>-->
+        <!--        </div>-->
+
+        <!--        &lt;!&ndash; 底部装饰线 &ndash;&gt;-->
+        <!--        <div class="mt-2 h-0.5 rounded-full opacity-60 mx-auto w-1/1"-->
+        <!--             :style="`background: linear-gradient(90deg, ${stakingDetail?.poolColor} 0%, transparent 100%)`"></div>-->
+        <!--      </div>-->
+        <!--    </div>-->
+        <!--  </div>-->
+
+        <!--  &lt;!&ndash; 详细信息网格 &ndash;&gt;-->
+        <!--  <div class="space-y-3 mb-4">-->
+        <!--    &lt;!&ndash; 第一行：资金池和总容量 &ndash;&gt;-->
+        <!--    <div class="grid grid-cols-2 gap-3">-->
+        <!--      <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">-->
+        <!--        <p class="text-gray-400 text-sm mb-1">{{ t('staking.fund_pool') }}</p>-->
+        <!--        <p class="text-white font-bold text-base break-all">{{-->
+        <!--            formatNumber(stakingDetail?.totalStaked || '0')-->
+        <!--          }}</p>-->
+        <!--      </div>-->
+        <!--      <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">-->
+        <!--        <p class="text-gray-400 text-sm mb-1">{{ t('staking.total_capacity') }}</p>-->
+        <!--        <p class="text-white font-bold text-base break-all">-->
+        <!--          {{ formatNumber(stakingDetail?.maxStakeAmount || '0') }}</p>-->
+        <!--      </div>-->
+        <!--    </div>-->
+
+        <!--    &lt;!&ndash; 第二行：我的余额和年化率 &ndash;&gt;-->
+        <!--    <div class="grid grid-cols-2 gap-3">-->
+        <!--      <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">-->
+        <!--        <p class="text-gray-400 text-sm mb-1">{{ t('staking.my_balance') }}</p>-->
+        <!--        <p class="text-white font-bold text-base break-all">{{ formatNumber(myAlphaBalance) }}</p>-->
+        <!--      </div>-->
+        <!--      <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">-->
+        <!--        <p class="text-gray-400 text-sm mb-1">{{ t('staking.annual_rate') }}</p>-->
+        <!--        <p class="font-bold text-base break-all" style="color: #5BF655">{{ stakingDetail?.yearRate }}</p>-->
+        <!--      </div>-->
+        <!--    </div>-->
+
+        <!--  </div>-->
+
+        <!--  &lt;!&ndash; 底部质押时间按钮 &ndash;&gt;-->
+        <!--  <button-->
+        <!--      @click="handleStakeAction"-->
+        <!--      :disabled="isStaking || !walletStore.address"-->
+        <!--      class="btn-primary w-full py-4 text-black font-bold text-lg rounded-full transition-all duration-300"-->
+        <!--      :class="isStaking ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'"-->
+        <!--  >-->
+        <!--    <span v-if="isStaking" class="flex items-center justify-center">-->
+        <!--      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none"-->
+        <!--           viewBox="0 0 24 24">-->
+        <!--        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>-->
+        <!--        <path class="opacity-75" fill="currentColor"-->
+        <!--              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>-->
+        <!--      </svg>-->
+        <!--      {{ t('common.processing') }}-->
+        <!--    </span>-->
+        <!--    <span v-else>{{ t('common.stake') }}</span>-->
+        <!--  </button>-->
+
+        <!--</div>-->
+        <div
+            v-else-if="stakingDetail"
+            class="rounded-2xl p-4 mb-6"
+            style="background: linear-gradient(135deg,rgba(255, 217, 125, 0.8) 0%,rgba(255, 201, 76, 0.8) 100%);">
           <!-- 顶部按钮组 -->
           <div class="grid grid-cols-2 gap-3 mb-6">
             <button
                 @click="handleAdd"
-                class="btn-primary py-3 text-black font-bold rounded-full"
+                class="bg-yellow-100/90 py-3 text-black font-bold rounded-full"
             >
               {{ t('common.add') }}
             </button>
             <button
                 @click="handleClaimButton"
-                class="btn-primary py-3 text-black font-bold rounded-full bg-opacity-60"
+                class="bg-yellow-100/90 py-3 text-black font-bold rounded-full bg-opacity-60"
             >
               {{ t('staking.claim_type') }}
             </button>
@@ -733,59 +1009,114 @@ const handleStakeAction = async () => {
 
           <!-- 质押金额卡片 -->
           <div
-              class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700 mb-4">
+              class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-yellow-700/60 mb-4"
+          >
             <!-- 质押金额标题和图标 -->
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center">
                 <!-- 池子等级图标 -->
-                <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"
-                     :class="`bg-gradient-to-br ${stakingDetail?.poolGradient}`"
-                     style="box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <div
+                    class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"
+                    style="
+            background: linear-gradient(135deg, #ffd97d 0%, #ffc94c 100%);
+            box-shadow: 0 4px 15px rgba(255, 201, 76, 0.3);
+          "
+                >
                   <!-- 内部光泽效果 -->
-                  <div class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"></div>
+                  <div
+                      class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"
+                  ></div>
                   <!-- 池子图标 -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white z-10" fill="none"
-                       viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-black z-10"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                  >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                    />
                   </svg>
                   <!-- 装饰性光环 -->
-                  <div class="absolute -inset-1 rounded-full opacity-50"
-                       :style="`background: conic-gradient(from 0deg, ${stakingDetail?.poolColor}, transparent, ${stakingDetail?.poolColor})`"></div>
+                  <div
+                      class="absolute -inset-1 rounded-full opacity-50"
+                      style="
+              background: conic-gradient(from 0deg, #ffd97d, transparent, #ffd97d);
+            "
+                  ></div>
                 </div>
                 <!-- 标题 -->
                 <div class="text-left">
-                  <h3 class="text-lg font-bold text-white">{{ t('staking.staking_amount') }}</h3>
-                  <p class="text-gray-400 text-sm">{{ stakingDetail?.poolName }} {{ stakingDetail?.id }}</p>
+                  <h3 class="text-lg font-bold text-white">
+                    {{ t('staking.staking_amount') }}
+                  </h3>
+                  <p class="text-gray-400 text-sm">
+                    {{ stakingDetail?.poolName }} {{ stakingDetail?.id }}
+                  </p>
                 </div>
               </div>
 
               <!-- 状态标签 -->
-              <div class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"
-                   :class="`bg-gradient-to-r ${stakingDetail?.poolGradient}`">
+              <div
+                  class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"
+                  style="
+          background: linear-gradient(90deg, #ffd97d 0%, #ffc94c 100%);
+        "
+              >
                 <div class="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1.5" fill="none" viewBox="0 0 24 24"
-                       stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-3 w-3 mr-1.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                  >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
                   </svg>
-                  <span class="text-white font-medium">{{ stakingDetail?.status }}</span>
+                  <span class="text-black font-medium">{{ stakingDetail?.status }}</span>
                 </div>
               </div>
             </div>
 
             <!-- 质押金额显示 -->
-            <div class="relative overflow-hidden rounded-xl p-4 border-2"
-                 :style="`border-color: ${stakingDetail?.poolColor}; background: linear-gradient(135deg, ${stakingDetail?.poolColor}15 0%, ${stakingDetail?.poolColor}08 100%)`">
+            <div
+                class="relative overflow-hidden rounded-xl p-4 border-2"
+                style="
+        border-color: #ffd97d;
+        background: linear-gradient(135deg, #ffd97d15 0%, #ffd97d08 100%);
+      "
+            >
               <!-- 背景装饰效果 -->
-              <div class="absolute inset-0 opacity-20"
-                   :style="`background: radial-gradient(circle at 20% 50%, ${stakingDetail?.poolColor}40 0%, transparent 50%), radial-gradient(circle at 80% 50%, ${stakingDetail?.poolColor}30 0%, transparent 50%)`"></div>
+              <div
+                  class="absolute inset-0 opacity-20"
+                  style="
+          background: radial-gradient(circle at 20% 50%, #ffd97d40 0%, transparent 50%),
+                      radial-gradient(circle at 80% 50%, #ffd97d30 0%, transparent 50%);
+        "
+              ></div>
 
               <!-- 闪烁装饰点 -->
-              <div class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
-                   :style="`background: ${stakingDetail?.poolColor}; box-shadow: 0 0 10px ${stakingDetail?.poolColor}`"></div>
-              <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
-                   :style="`background: ${stakingDetail?.poolColor}; box-shadow: 0 0 8px ${stakingDetail?.poolColor}; animation-delay: 0.5s`"></div>
+              <div
+                  class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
+                  style="background: #ffd97d; box-shadow: 0 0 10px #ffd97d"
+              ></div>
+              <div
+                  class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
+                  style="
+          background: #ffd97d;
+          box-shadow: 0 0 8px #ffd97d;
+          animation-delay: 0.5s;
+        "
+              ></div>
 
               <!-- 内容区域 -->
               <div class="relative z-10 text-center">
@@ -796,7 +1127,10 @@ const handleStakeAction = async () => {
                       v-model="inputAmount"
                       type="number"
                       class="bg-transparent text-white font-black text-lg text-left border-none outline-none w-32 no-spinner p-0 m-0"
-                      :style="`text-shadow: 0 0 15px ${stakingDetail?.poolColor}80, 0 0 30px ${stakingDetail?.poolColor}40; color: white !important;`"
+                      style="
+              text-shadow: 0 0 15px #ffd97d80, 0 0 30px #ffd97d40;
+              color: white !important;
+            "
                       placeholder="5000"
                       step="0.01"
                       min="0"
@@ -806,8 +1140,12 @@ const handleStakeAction = async () => {
                 </div>
 
                 <!-- 底部装饰线 -->
-                <div class="mt-2 h-0.5 rounded-full opacity-60 mx-auto w-1/1"
-                     :style="`background: linear-gradient(90deg, ${stakingDetail?.poolColor} 0%, transparent 100%)`"></div>
+                <div
+                    class="mt-2 h-0.5 rounded-full opacity-60 mx-auto w-full"
+                    style="
+            background: linear-gradient(90deg, #ffd97d 0%, transparent 100%);
+          "
+                ></div>
               </div>
             </div>
           </div>
@@ -816,52 +1154,81 @@ const handleStakeAction = async () => {
           <div class="space-y-3 mb-4">
             <!-- 第一行：资金池和总容量 -->
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">
+              <div
+                  class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-yellow-700/60"
+              >
                 <p class="text-gray-400 text-sm mb-1">{{ t('staking.fund_pool') }}</p>
-                <p class="text-white font-bold text-base break-all">{{
-                    formatNumber(stakingDetail?.totalStaked || '0')
-                  }}</p>
+                <p class="text-white font-bold text-base break-all">
+                  {{ formatNumber(stakingDetail?.totalStaked || '0') }}
+                </p>
               </div>
-              <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">
+              <div
+                  class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-yellow-700/60"
+              >
                 <p class="text-gray-400 text-sm mb-1">{{ t('staking.total_capacity') }}</p>
                 <p class="text-white font-bold text-base break-all">
-                  {{ formatNumber(stakingDetail?.maxStakeAmount || '0') }}</p>
+                  {{ formatNumber(stakingDetail?.maxStakeAmount || '0') }}
+                </p>
               </div>
             </div>
 
             <!-- 第二行：我的余额和年化率 -->
             <div class="grid grid-cols-2 gap-3">
-              <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">
+              <div
+                  class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-yellow-700/60"
+              >
                 <p class="text-gray-400 text-sm mb-1">{{ t('staking.my_balance') }}</p>
-                <p class="text-white font-bold text-base break-all">{{ formatNumber(myAlphaBalance) }}</p>
+                <p class="text-white font-bold text-base break-all">
+                  {{ formatNumber(myAlphaBalance) }}
+                </p>
               </div>
-              <div class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-gray-700">
+              <div
+                  class="bg-alpha-surface-light bg-opacity-90 rounded-lg p-4 border border-yellow-700/60"
+              >
                 <p class="text-gray-400 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                <p class="font-bold text-base break-all" style="color: #5BF655">{{ stakingDetail?.yearRate }}</p>
+                <p class="font-bold text-base break-all" style="color: #ffd97d">
+                  {{ stakingDetail?.yearRate }}
+                </p>
               </div>
             </div>
-
           </div>
 
-          <!-- 底部质押时间按钮 -->
+          <!-- 底部质押按钮 -->
           <button
               @click="handleStakeAction"
               :disabled="isStaking || !walletStore.address"
               class="btn-primary w-full py-4 text-black font-bold text-lg rounded-full transition-all duration-300"
               :class="isStaking ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'"
+              style="
+      background: linear-gradient(90deg, #ffd97d 0%, #ffc94c 100%);
+      box-shadow: 0 4px 15px rgba(255, 201, 76, 0.4);
+    "
           >
-            <span v-if="isStaking" class="flex items-center justify-center">
-              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none"
-                   viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              {{ t('common.processing') }}
-            </span>
+    <span v-if="isStaking" class="flex items-center justify-center">
+      <svg
+          class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+      >
+        <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+        ></circle>
+        <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      {{ t('common.processing') }}
+    </span>
             <span v-else>{{ t('common.stake') }}</span>
           </button>
-
         </div>
       </div>
     </div>
@@ -892,5 +1259,64 @@ const handleStakeAction = async () => {
 /* Firefox */
 .no-spinner[type=number] {
   -moz-appearance: textfield;
+}
+</style>
+<style scoped>
+/* 颜色变量 */
+:root {
+  --gold-50: #fefdf8;
+  --gold-100: #fdf5e6;
+  --gold-200: #faecd0;
+  --gold-300: #f6dc9f;
+  --gold-400: #f0c56b;
+  --gold-500: #e9aa40;
+  --gold-600: #d6932a;
+  --gold-700: #b27621;
+  --gold-800: #8f5e20;
+  --gold-900: #744e1f;
+}
+
+/* 背景色 */
+.bg-gold-50 {
+  background-color: var(--gold-50);
+}
+
+.bg-gold-900\/20 {
+  background-color: rgb(116 78 31 / 0.2);
+}
+
+/* 文字色 */
+.text-gold-800 {
+  color: var(--gold-800);
+}
+
+.text-gold-900 {
+  color: var(--gold-900);
+}
+
+.text-gold-600 {
+  color: var(--gold-600);
+}
+
+/* 通用辅助类 */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.size-5 {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.size-10 {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.px-safe {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 </style>

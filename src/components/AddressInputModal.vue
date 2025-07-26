@@ -56,80 +56,177 @@ const isAddressValid = computed(() => {
 
 <template>
   <Transition name="fade">
+    <!--<div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center">-->
+    <!--  &lt;!&ndash; 遮罩层 &ndash;&gt;-->
+    <!--  <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" @click="handleClose"></div>-->
+
+    <!--  &lt;!&ndash; 弹窗内容 &ndash;&gt;-->
+    <!--  <div class="relative w-11/12 max-w-md bg-alpha-surface-light rounded-2xl p-6 z-10 border border-gray-700">-->
+    <!--    &lt;!&ndash; 关闭按钮 &ndash;&gt;-->
+    <!--    <button-->
+    <!--      @click="handleClose"-->
+    <!--      class="absolute right-4 top-4 text-gray-400 hover:text-white z-10"-->
+    <!--    >-->
+    <!--      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+    <!--        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />-->
+    <!--      </svg>-->
+    <!--    </button>-->
+
+    <!--    &lt;!&ndash; 标题 &ndash;&gt;-->
+    <!--    <h3 class="text-2xl font-bold mb-6 text-center" style="color: #5BF655">-->
+    <!--      {{ title || '输入转移地址' }}-->
+    <!--    </h3>-->
+
+    <!--    &lt;!&ndash; 说明文字 &ndash;&gt;-->
+    <!--    <div class="mb-4">-->
+    <!--      <p class="text-gray-300 text-sm text-center mb-2">-->
+    <!--        {{t('transfer.transfer_description')}}-->
+    <!--      </p>-->
+    <!--      <p class="text-gray-400 text-xs text-center">-->
+    <!--        {{t('transfer.transfer_note')}}-->
+    <!--      </p>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; 地址输入框 &ndash;&gt;-->
+    <!--    <div class="mb-6">-->
+    <!--      <label class="block text-gray-300 text-sm font-medium mb-2">-->
+    <!--        {{t('transfer.wallet_address')}}-->
+    <!--      </label>-->
+    <!--      <input-->
+    <!--        v-model="inputAddress"-->
+    <!--        type="text"-->
+    <!--        :placeholder="placeholder || '请输入钱包地址 (0x...)'"-->
+    <!--        class="w-full bg-alpha-surface text-gray-300 rounded-lg px-4 py-3 border transition-colors duration-300 focus:outline-none"-->
+    <!--        :class="[-->
+    <!--          isAddressValid-->
+    <!--            ? 'border-gray-700 focus:border-alpha-primary'-->
+    <!--            : 'border-red-500 focus:border-red-400'-->
+    <!--        ]"-->
+    <!--      />-->
+    <!--      &lt;!&ndash; 地址格式错误提示 &ndash;&gt;-->
+    <!--      <div v-if="!isAddressValid" class="mt-2 text-red-400 text-xs">-->
+    <!--        {{t('transfer.invalid_address_format')}}-->
+    <!--      </div>-->
+    <!--      &lt;!&ndash; 地址格式说明 &ndash;&gt;-->
+    <!--      <div v-else class="mt-2 text-gray-500 text-xs">-->
+    <!--        {{t('transfer.address_format_note')}}-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; 按钮组 &ndash;&gt;-->
+    <!--    <div class="grid grid-cols-2 gap-3">-->
+    <!--      <button-->
+    <!--        @click="handleClose"-->
+    <!--        class="py-3 px-6 rounded-full font-bold bg-alpha-surface border border-gray-600 text-gray-300 hover:border-gray-500 transition-all duration-300"-->
+    <!--      >-->
+    <!--        {{ t('common.cancel') }}-->
+    <!--      </button>-->
+    <!--      <button-->
+    <!--        @click="handleConfirm"-->
+    <!--        :disabled="!inputAddress.trim() || !isAddressValid"-->
+    <!--        class="py-3 px-6 rounded-full font-bold transition-all duration-300"-->
+    <!--        :class="[-->
+    <!--          inputAddress.trim() && isAddressValid-->
+    <!--            ? 'bg-alpha-primary text-black hover:bg-alpha-primary-light'-->
+    <!--            : 'bg-gray-600 text-gray-400 cursor-not-allowed'-->
+    <!--        ]"-->
+    <!--      >-->
+    <!--        {{ t('common.confirm') }}-->
+    <!--      </button>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
     <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center">
       <!-- 遮罩层 -->
-      <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" @click="handleClose"></div>
+      <div
+          class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
+          @click="handleClose"
+      ></div>
 
       <!-- 弹窗内容 -->
-      <div class="relative w-11/12 max-w-md bg-alpha-surface-light rounded-2xl p-6 z-10 border border-gray-700">
+      <div
+          class="relative w-11/12 max-w-md bg-[#FFFDF9]/95 backdrop-blur-md rounded-2xl p-6 z-10 border border-[#FFD97D]/40"
+      >
         <!-- 关闭按钮 -->
         <button
-          @click="handleClose"
-          class="absolute right-4 top-4 text-gray-400 hover:text-white z-10"
+            @click="handleClose"
+            class="absolute right-4 top-4 text-gray-500 hover:text-[#D8963F] transition-colors"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+          >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
 
         <!-- 标题 -->
-        <h3 class="text-2xl font-bold mb-6 text-center" style="color: #5BF655">
+        <h3 class="text-2xl font-bold mb-6 text-center text-[#D8963F]">
           {{ title || '输入转移地址' }}
         </h3>
 
         <!-- 说明文字 -->
         <div class="mb-4">
-          <p class="text-gray-300 text-sm text-center mb-2">
-            {{t('transfer.transfer_description')}}
+          <p class="text-gray-700 text-sm text-center mb-2">
+            {{ t('transfer.transfer_description') }}
           </p>
-          <p class="text-gray-400 text-xs text-center">
-            {{t('transfer.transfer_note')}}
+          <p class="text-gray-500 text-xs text-center">
+            {{ t('transfer.transfer_note') }}
           </p>
         </div>
 
         <!-- 地址输入框 -->
         <div class="mb-6">
-          <label class="block text-gray-300 text-sm font-medium mb-2">
-            {{t('transfer.wallet_address')}}
+          <label class="block text-gray-700 text-sm font-medium mb-2">
+            {{ t('transfer.wallet_address') }}
           </label>
           <input
-            v-model="inputAddress"
-            type="text"
-            :placeholder="placeholder || '请输入钱包地址 (0x...)'"
-            class="w-full bg-alpha-surface text-gray-300 rounded-lg px-4 py-3 border transition-colors duration-300 focus:outline-none"
-            :class="[
-              isAddressValid
-                ? 'border-gray-700 focus:border-alpha-primary'
-                : 'border-red-500 focus:border-red-400'
-            ]"
+              v-model="inputAddress"
+              type="text"
+              :placeholder="placeholder || '请输入钱包地址 (0x...)'"
+              class="w-full bg-[#FFF9EE] text-gray-800 rounded-lg px-4 py-3 border transition-colors duration-300 focus:outline-none"
+              :class="[
+          isAddressValid
+            ? 'border-[#FFD97D]/60 focus:border-[#D8963F]'
+            : 'border-red-400 focus:border-red-500'
+        ]"
           />
+
           <!-- 地址格式错误提示 -->
-          <div v-if="!isAddressValid" class="mt-2 text-red-400 text-xs">
-            {{t('transfer.invalid_address_format')}}
+          <div v-if="!isAddressValid" class="mt-2 text-red-500 text-xs">
+            {{ t('transfer.invalid_address_format') }}
           </div>
           <!-- 地址格式说明 -->
           <div v-else class="mt-2 text-gray-500 text-xs">
-            {{t('transfer.address_format_note')}}
+            {{ t('transfer.address_format_note') }}
           </div>
         </div>
 
         <!-- 按钮组 -->
         <div class="grid grid-cols-2 gap-3">
           <button
-            @click="handleClose"
-            class="py-3 px-6 rounded-full font-bold bg-alpha-surface border border-gray-600 text-gray-300 hover:border-gray-500 transition-all duration-300"
+              @click="handleClose"
+              class="py-3 px-6 rounded-full font-bold bg-[#FFF9EE] border border-[#FFD97D]/60 text-[#D8963F] hover:border-[#D8963F] transition-all duration-300"
           >
             {{ t('common.cancel') }}
           </button>
           <button
-            @click="handleConfirm"
-            :disabled="!inputAddress.trim() || !isAddressValid"
-            class="py-3 px-6 rounded-full font-bold transition-all duration-300"
-            :class="[
-              inputAddress.trim() && isAddressValid
-                ? 'bg-alpha-primary text-black hover:bg-alpha-primary-light'
-                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-            ]"
+              @click="handleConfirm"
+              :disabled="!inputAddress.trim() || !isAddressValid"
+              class="py-3 px-6 rounded-full font-bold transition-all duration-300"
+              :class="[
+          inputAddress.trim() && isAddressValid
+            ? 'bg-gradient-to-r from-[#FFD97D] to-[#FFC94C] text-black hover:shadow-lg'
+            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        ]"
           >
             {{ t('common.confirm') }}
           </button>

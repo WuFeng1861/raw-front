@@ -251,32 +251,27 @@ const handleNFTCardClick = (nft: any) => {
       <!-- Main Content -->
       <div class="px-4 py-6">
         <!-- 标题 -->
-        <h1 class="text-2xl font-bold mb-2 text-left" style="color: #5BF655">{{ t('staking.title') }}</h1>
+        <h1 class="text-3xl font-bold mb-4 text-left" style="color: #FFD700; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+          {{ t('staking.title') }}
+        </h1>
 
         <!-- 绿色背景容器 - 与质押合约页面保持一致 -->
-        <div class="rounded-2xl p-4 mb-6"
-             style="background: linear-gradient(135deg, rgba(124, 221, 61, 0.8) 0%, rgba(83, 203, 67, 0.8) 100%)">
+        <div class="rounded-3xl p-6 mb-8 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-2xl border border-amber-300">
 
-          <!-- 我的质押按钮 -->
-          <button
-              class="btn-primary w-full mb-6 py-4 text-black font-bold text-lg rounded-full flex items-center justify-center">
+          <!-- 我的质押按钮 - 金色主题 -->
+          <button class="w-full mb-6 py-4 text-amber-900 font-bold text-lg rounded-full flex items-center justify-center bg-gradient-to-r from-amber-100 to-yellow-100 hover:from-amber-200 hover:to-yellow-200 shadow-lg transition-all duration-300">
             <span>{{ t('staking.my_staking_pool') }}</span>
-            <div class="ml-2 bg-white bg-opacity-30 rounded-full px-2 py-1">
-              <span class="text-black text-sm font-bold">{{ nftStakingList.length }}{{
-                  t('staking.cards_count')
-                }}</span>
+            <div class="ml-2 bg-amber-300 bg-opacity-50 rounded-full px-3 py-1">
+              <span class="text-amber-900 text-sm font-bold">{{ nftStakingList.length }}{{ t('staking.cards_count') }}</span>
             </div>
           </button>
 
           <!-- 加载状态 -->
-          <div v-if="isLoading" class="text-center py-8">
-            <div
-                class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-white bg-alpha-primary transition ease-in-out duration-150">
-              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-                   viewBox="0 0 24 24">
+          <div v-if="isLoading" class="text-center py-12">
+            <div class="inline-flex items-center px-6 py-3 font-semibold text-sm shadow-lg rounded-full bg-amber-400 text-amber-900">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-amber-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               {{ t('common.loading') }}
             </div>
@@ -284,229 +279,106 @@ const handleNFTCardClick = (nft: any) => {
 
           <!-- 暂无NFT质押状态 -->
           <div v-else-if="!walletStore.address" class="text-center py-12">
-            <div
-                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
-              <!-- 钱包图标 -->
-              <div
-                  class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+            <div class="bg-amber-50 bg-opacity-20 backdrop-blur-sm rounded-3xl p-10 shadow-xl border border-amber-200">
+              <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-200 bg-opacity-50 flex items-center justify-center">
+                <svg class="h-10 w-10 text-amber-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
               </div>
-              <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.connect_wallet_to_view') }}</h3>
-              <p class="text-gray-400 text-sm">{{ t('staking.connect_wallet_to_view_nft') }}</p>
+              <h3 class="text-xl font-bold text-amber-900 mb-3">{{ t('staking.connect_wallet_to_view') }}</h3>
+              <p class="text-amber-700 text-base">{{ t('staking.connect_wallet_to_view_nft') }}</p>
             </div>
           </div>
 
           <!-- 暂无NFT质押记录 -->
           <div v-else-if="nftStakingList.length === 0" class="text-center">
-            <div
-                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-700">
-              <!-- NFT图标 -->
-              <div
-                  class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            <div class="bg-amber-50 bg-opacity-20 backdrop-blur-sm rounded-3xl p-10 shadow-xl border border-amber-200">
+              <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-200 bg-opacity-50 flex items-center justify-center">
+                <svg class="h-10 w-10 text-amber-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                 </svg>
               </div>
-              <h3 class="text-lg font-medium text-white mb-2">{{ t('staking.no_nft_staking_records') }}</h3>
-              <p class="text-gray-400 text-sm mb-4">{{ t('staking.no_nft_staking_records_desc') }}</p>
-              <p class="text-gray-400 text-xs">
-                {{ t('staking.no_nft_staking_note') }}</p>
+              <h3 class="text-xl font-bold text-amber-900 mb-3">{{ t('staking.no_nft_staking_records') }}</h3>
+              <p class="text-amber-700 text-base mb-4">{{ t('staking.no_nft_staking_records_desc') }}</p>
+              <p class="text-amber-600 text-sm">{{ t('staking.no_nft_staking_note') }}</p>
             </div>
           </div>
 
           <!-- NFT质押卡片列表 -->
-          <div v-else class="space-y-4">
-            <div
-                v-for="nft in nftStakingList"
-                :key="nft.id"
-                @click="handleNFTCardClick(nft)"
-                class="bg-alpha-surface-light bg-opacity-90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-700"
-            >
+          <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div v-for="nft in nftStakingList" :key="nft.id" @click="handleNFTCardClick(nft)"
+                 class="bg-gradient-to-br from-amber-100 to-yellow-100 rounded-3xl p-6 shadow-xl border border-amber-300 hover:shadow-amber-400/50 transition-all duration-300">
+
               <!-- 卡片头部 - 等级标签和状态 -->
-              <div class="flex items-center justify-between mb-4">
-                <!-- 等级标签 -->
-                <div class="flex items-center text-left">
-                  <!-- 等级图标 -->
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center mr-3 relative"
-                       :class="`bg-gradient-to-br ${nft.levelGradient}`"
-                       style="box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                    <!-- 内部光泽效果 -->
-                    <div class="absolute inset-1 rounded-full bg-gradient-to-br from-white/30 to-transparent"></div>
-                    <!-- NFT图标 -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white z-10" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+              <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center">
+                  <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4 bg-gradient-to-br from-amber-400 to-yellow-600 shadow-lg">
+                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                     </svg>
-                    <!-- 装饰性光环 -->
-                    <div class="absolute -inset-1 rounded-full opacity-50"
-                         :style="`background: conic-gradient(from 0deg, ${nft.levelColor}, transparent, ${nft.levelColor})`"></div>
                   </div>
-                  <!-- 等级名称和数量 -->
                   <div>
-                    <div class="flex items-center">
-                      <h3 class="text-lg font-bold text-white mr-2">{{
-                          t(`staking.${nft.level === '金卡' ? 'gold' : nft.level === '银卡' ? 'silver' : 'bronze'}_card`)
-                        }}</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">{{ t('staking.nft_staking_card') }}</p>
+                    <h3 class="text-lg font-bold text-amber-900">{{ t(`staking.${nft.level === '金卡' ? 'gold' : nft.level === '银卡' ? 'silver' : 'bronze'}_card`) }}{{nft.poolId}}</h3>
+                    <p class="text-amber-700 text-sm">{{ t('staking.nft_staking_card') }}</p>
                   </div>
                 </div>
 
-                <!-- 状态标签 -->
-                <div class="px-3 py-1.5 rounded-full text-xs font-medium shadow-lg"
-                     :class="`bg-gradient-to-r ${nft.levelGradient}`">
-                  <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1.5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
-                    <span class="text-white font-medium">{{ t('staking.status_active') }}</span>
-                  </div>
+                <div class="px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-900 shadow-md">
+                  {{ t('staking.status_active') }}
                 </div>
               </div>
 
-              <!-- 主要信息区域 - 质押金额和可领取收益 -->
-              <div class="space-y-3 mb-4">
-                <!-- 质押金额单独一行 -->
-                <div class="relative overflow-hidden rounded-xl p-4 border-2"
-                     :style="`border-color: ${nft.levelColor}; background: linear-gradient(135deg, ${nft.levelColor}15 0%, ${nft.levelColor}08 100%)`">
-                  <!-- 背景装饰效果 -->
-                  <div class="absolute inset-0 opacity-20"
-                       :style="`background: radial-gradient(circle at 20% 50%, ${nft.levelColor}40 0%, transparent 50%), radial-gradient(circle at 80% 50%, ${nft.levelColor}30 0%, transparent 50%)`"></div>
-
-                  <!-- 闪烁装饰点 -->
-                  <div class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
-                       :style="`background: ${nft.levelColor}; box-shadow: 0 0 10px ${nft.levelColor}`"></div>
-                  <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
-                       :style="`background: ${nft.levelColor}; box-shadow: 0 0 8px ${nft.levelColor}; animation-delay: 0.5s`"></div>
-
-                  <!-- 内容区域 -->
-                  <div class="relative z-10">
-                    <div class="flex items-center justify-between mb-2">
-                      <p class="text-gray-300 text-sm font-medium flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5"
-                             :style="`color: ${nft.levelColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        {{ t('staking.staking_amount') }}
-                      </p>
-                      <!-- 趋势图标 -->
-                      <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-bounce"
-                             :style="`color: ${nft.levelColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                      </div>
-                    </div>
-
-                    <!-- 金额显示 -->
-                    <div class="flex items-baseline">
-                      <p class="text-white font-black text-xl break-all mr-2"
-                         :style="`text-shadow: 0 0 20px ${nft.levelColor}80, 0 0 40px ${nft.levelColor}40`">
-                        {{ formatNumber(nft.amount) }}
-                      </p>
-                      <span class="text-gray-400 text-sm font-medium">RWA</span>
-                    </div>
-
-                    <!-- 底部装饰线 -->
-                    <div class="mt-2 h-0.5 rounded-full opacity-60"
-                         :style="`background: linear-gradient(90deg, ${nft.levelColor} 0%, transparent 100%)`"></div>
+              <!-- 主要信息区域 -->
+              <div class="space-y-4 mb-6">
+                <!-- 质押金额 -->
+                <div class="bg-white bg-opacity-50 rounded-2xl p-5 border border-amber-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="text-amber-800 text-sm font-medium">{{ t('staking.staking_amount') }}</p>
+                    <svg class="h-4 w-4 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="flex items-baseline">
+                    <p class="text-amber-900 font-black text-2xl">{{ formatNumber(nft.amount) }}</p>
+                    <span class="text-amber-700 text-sm ml-2">RWA</span>
                   </div>
                 </div>
 
-                <!-- 可领取收益单独一行 -->
-                <div class="relative overflow-hidden rounded-xl p-4 border-2"
-                     style="border-color: #5BF655; background: linear-gradient(135deg, #5BF65515 0%, #5BF65508 100%)">
-                  <!-- 背景装饰效果 -->
-                  <div class="absolute inset-0 opacity-20"
-                       style="background: radial-gradient(circle at 20% 50%, #5BF65540 0%, transparent 50%), radial-gradient(circle at 80% 50%, #5BF65530 0%, transparent 50%)"></div>
-
-                  <!-- 闪烁装饰点 -->
-                  <div class="absolute top-2 right-2 w-2 h-2 rounded-full animate-pulse"
-                       style="background: #5BF655; box-shadow: 0 0 10px #5BF655"></div>
-                  <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full animate-pulse"
-                       style="background: #5BF655; box-shadow: 0 0 8px #5BF655; animation-delay: 0.5s"></div>
-
-                  <!-- 内容区域 -->
-                  <div class="relative z-10">
-                    <div class="flex items-center justify-between mb-2">
-                      <p class="text-gray-300 text-sm font-medium flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" style="color: #5BF655"
-                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                        {{ t('staking.claimable_reward') }}
-                      </p>
-                      <!-- 收益图标 -->
-                      <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-pulse" style="color: #5BF655"
-                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                      </div>
-                    </div>
-
-                    <!-- 收益显示 -->
-                    <div class="flex items-baseline">
-                      <p class="text-white font-black text-xl break-all mr-2"
-                         style="text-shadow: 0 0 20px #5BF65580, 0 0 40px #5BF65540">
-                        {{ formatNumber(nft.claimableReward) }}
-                      </p>
-                      <span class="text-gray-400 text-sm font-medium">RWA</span>
-                    </div>
-
-                    <!-- 底部装饰线 -->
-                    <div class="mt-2 h-0.5 rounded-full opacity-60"
-                         style="background: linear-gradient(90deg, #5BF655 0%, transparent 100%)"></div>
+                <!-- 可领取收益 -->
+                <div class="bg-white bg-opacity-50 rounded-2xl p-5 border border-amber-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="text-amber-800 text-sm font-medium">{{ t('staking.claimable_reward') }}</p>
+                    <svg class="h-4 w-4 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                  </div>
+                  <div class="flex items-baseline">
+                    <p class="text-amber-900 font-black text-2xl">{{ formatNumber(nft.claimableReward) }}</p>
+                    <span class="text-amber-700 text-sm ml-2">RWA</span>
                   </div>
                 </div>
               </div>
 
               <!-- 详细数据网格 -->
-              <div class="grid grid-cols-2 gap-3 mb-4">
-                <!-- 年化率 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
-                  <p class="font-bold text-base break-all" style="color: #5BF655">{{ nft.yearRate }}</p>
+              <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-white bg-opacity-30 rounded-xl p-4 border border-amber-200">
+                  <p class="text-amber-800 text-sm mb-1">{{ t('staking.annual_rate') }}</p>
+                  <p class="font-bold text-lg text-amber-900">{{ nft.yearRate }}</p>
                 </div>
-
-                <!-- 质押分红 -->
-                <div class="bg-alpha-surface rounded-lg p-3 border border-gray-600">
-                  <p class="text-gray-400 text-sm mb-1">{{ t('staking.staking_dividend') }}</p>
-                  <p class="text-white font-bold text-base">{{ nft.stakingRate }}</p>
+                <div class="bg-white bg-opacity-30 rounded-xl p-4 border border-amber-200">
+                  <p class="text-amber-800 text-sm mb-1">{{ t('staking.staking_dividend') }}</p>
+                  <p class="text-amber-900 font-bold text-lg">{{ nft.stakingRate }}</p>
                 </div>
               </div>
 
-              <!-- 领取按钮 -->
               <!-- 按钮组 -->
-              <div class="grid grid-cols-2 gap-3">
-                <!-- 领取按钮 -->
-                <button
-                    @click="handleClaim(nft.id, $event)"
-                    class="py-3 text-black font-bold rounded-full transition-all duration-300"
-                    :class="`bg-gradient-to-r ${nft.levelGradient} hover:shadow-lg`"
-                    :style="`box-shadow: 0 4px 15px ${nft.levelColor}40`"
-                >
+              <div class="grid grid-cols-2 gap-4">
+                <button @click="handleClaim(nft.poolId, $event)"
+                        class="py-3 text-amber-900 font-bold rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 shadow-lg transition-all duration-300">
                   {{ t('common.claim') }}
                 </button>
-
-                <!-- 转移按钮 -->
-                <button
-                    @click="handleTransfer(nft, $event)"
-                    class="py-3 text-white font-bold rounded-full transition-all duration-300 bg-alpha-surface-light border border-gray-600 hover:bg-alpha-surface hover:border-gray-500"
-                >
+                <button @click="handleTransfer(nft, $event)"
+                        class="py-3 text-amber-800 font-bold rounded-full bg-white bg-opacity-50 border border-amber-300 hover:bg-opacity-70 transition-all duration-300">
                   {{ t('common.transfer') }}
                 </button>
               </div>
@@ -540,5 +412,20 @@ const handleNFTCardClick = (nft: any) => {
 
 .text-gray-400 {
   color: #9ca3af !important;
+}
+
+</style>
+
+<style>
+/* 金色渐变背景 */
+.golden-glow {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.1);
+}
+.text-gold {
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.border-gold {
+  border-color: #FFD700;
 }
 </style>
